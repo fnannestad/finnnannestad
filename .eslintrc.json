@@ -1,6 +1,12 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"],
-  "rules": {
-    "semi": [ "error", "never" ]
-  }
+	"extends": [
+		"next/core-web-vitals",
+		"next/typescript"
+	],
+	"rules": {
+		"semi": [
+			"error",
+			"never"
+		]
+	}
 }
