@@ -10,7 +10,8 @@ import {
 	Threads,
 	Instagram,
 	Medium,
-	Bluesky
+	Bluesky,
+	GoodReads
 } from "./icons"
 
 const components = {
@@ -25,7 +26,8 @@ const components = {
 	threads: Threads,
 	instagram: Instagram,
 	medium: Medium,
-	bluesky: Bluesky
+	bluesky: Bluesky,
+	goodReads: GoodReads
 }
 
 type SocialIconProps = {

@@ -22,6 +22,7 @@ const siteMetadata = {
 	instagram: "https://www.instagram.com/finn.bouldering/",
 	// medium: 'https://medium.com',
 	// bluesky: 'https://bsky.app/',
+	goodReads: "https://goodreads.com/finnnannestad",
 	locale: "en-AU",
 	// set to true if you want a navbar fixed to the top
 	stickyNav: false,
