@@ -6,5 +6,10 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit",
 		"source.fixAll.prettier": "explicit"
-	}
+	},
+	"cSpell.words": [
+		"algoliasearch",
+		"contentlayer",
+		"Nannestad's"
+	]
 }
