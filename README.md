@@ -1,6 +1,6 @@
 # Finn Nannestad's Website
 
-My personal website, based off [Tailwind Nextjs Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog), albeit with a lot stripped out.
+My personal website, based off [Tailwind Nextjs Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog).
 
 ## Installation
 
