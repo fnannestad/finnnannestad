@@ -2,6 +2,8 @@
 
 My personal website, based off [Tailwind Nextjs Starter Blog](https://github.com/timlrx/tailwind-nextjs-starter-blog).
 
+See it live [here](https://finnnannestad.com/).
+
 ## Installation
 
 ```bash
