@@ -5889,6 +5889,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-spellcheck@npm:^0.0.20":
+  version: 0.0.20
+  resolution: "eslint-plugin-spellcheck@npm:0.0.20"
+  dependencies:
+    globals: ^13.0.0
+    hunspell-spellchecker: ^1.0.2
+    lodash: ^4.17.15
+  peerDependencies:
+    eslint: ">=0.8.0"
+  checksum: 2ab85337774910de86586581f76bf10e40f83be4e0971d2f6f5a31b658ed3bb003528bedd25d70b07e2942e8418cd0009bf6eeab829eb7cbf2108e13afa83f35
+  languageName: node
+  linkType: hard
+
 "eslint-scope@npm:^8.2.0":
   version: 8.2.0
   resolution: "eslint-scope@npm:8.2.0"
@@ -6536,6 +6549,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"globals@npm:^13.0.0":
+  version: 13.24.0
+  resolution: "globals@npm:13.24.0"
+  dependencies:
+    type-fest: ^0.20.2
+  checksum: 56066ef058f6867c04ff203b8a44c15b038346a62efbc3060052a1016be9f56f4cf0b2cd45b74b22b81e521a889fc7786c73691b0549c2f3a6e825b3d394f43c
+  languageName: node
+  linkType: hard
+
 "globals@npm:^14.0.0":
   version: 14.0.0
   resolution: "globals@npm:14.0.0"
@@ -7041,6 +7063,15 @@ __metadata:
   version: 4.3.1
   resolution: "human-signals@npm:4.3.1"
   checksum: 6f12958df3f21b6fdaf02d90896c271df00636a31e2bbea05bddf817a35c66b38a6fdac5863e2df85bd52f34958997f1f50350ff97249e1dff8452865d5235d1
+  languageName: node
+  linkType: hard
+
+"hunspell-spellchecker@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "hunspell-spellchecker@npm:1.0.2"
+  bin:
+    hunspell-tojson: ./bin/hunspell-tojson.js
+  checksum: 098e00a705b1b8975924ccef1b23e1d63acc139a493a392bb55f887926c518b2edae01f9a697cffa73346160c562f89610f80d354360a2cb637a67f7c54f8227
   languageName: node
   linkType: hard
 
@@ -8043,6 +8074,13 @@ __metadata:
   version: 4.6.2
   resolution: "lodash.merge@npm:4.6.2"
   checksum: ad580b4bdbb7ca1f7abf7e1bce63a9a0b98e370cf40194b03380a46b4ed799c9573029599caebc1b14e3f24b111aef72b96674a56cfa105e0f5ac70546cdc005
+  languageName: node
+  linkType: hard
+
+"lodash@npm:^4.17.15":
+  version: 4.17.21
+  resolution: "lodash@npm:4.17.21"
+  checksum: eb835a2e51d381e561e508ce932ea50a8e5a68f4ebdd771ea240d3048244a8d13658acbd502cd4829768c56f2e16bdd4340b9ea141297d472517b83868e677f7
   languageName: node
   linkType: hard
 
@@ -11639,6 +11677,7 @@ __metadata:
     eslint-config-next: 15.1.4
     eslint-config-prettier: ^9.1.0
     eslint-plugin-prettier: ^5.2.0
+    eslint-plugin-spellcheck: ^0.0.20
     github-slugger: ^2.0.0
     globals: ^15.12.0
     gray-matter: ^4.0.2
@@ -11827,6 +11866,13 @@ __metadata:
   dependencies:
     prelude-ls: ^1.2.1
   checksum: ec688ebfc9c45d0c30412e41ca9c0cdbd704580eb3a9ccf07b9b576094d7b86a012baebc95681999dd38f4f444afd28504cb3a89f2ef16b31d4ab61a0739025a
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:^0.20.2":
+  version: 0.20.2
+  resolution: "type-fest@npm:0.20.2"
+  checksum: 4fb3272df21ad1c552486f8a2f8e115c09a521ad7a8db3d56d53718d0c907b62c6e9141ba5f584af3f6830d0872c521357e512381f24f7c44acae583ad517d73
   languageName: node
   linkType: hard
 

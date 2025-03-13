@@ -5,6 +5,7 @@ import path from "node:path"
 import { fileURLToPath } from "node:url"
 import js from "@eslint/js"
 import { FlatCompat } from "@eslint/eslintrc"
+import spellcheck from "eslint-plugin-spellcheck"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -27,7 +28,8 @@ const config = [
 	),
 	{
 		plugins: {
-			"@typescript-eslint": typescriptEslint
+			"@typescript-eslint": typescriptEslint,
+			"spellcheck": spellcheck
 		},
 
 		languageOptions: {
@@ -57,13 +59,59 @@ const config = [
 					specialLink: ["hrefLeft", "hrefRight"],
 					aspects: ["invalidHref", "preferButton"]
 				}
+			],
+			"spellcheck/spell-checker": [
+				"error",
+				{
+					lang: "en_AU",
+					minLength: 4,
+					skipIfMatch: [
+						// Ordinals, m (meters) and CSS (vw, vh)
+						"(?<=[0-9])(?:st|nd|rd|th|m|vw|vh)"
+					],
+					skipWords: [
+						"lang",
+						"gray",
+						"blog",
+						"blogs",
+						"lastmod",
+						"grotesk",
+						"center",
+						"uppercase",
+						"nowrap",
+						"whitespace",
+						"repo",
+						"extrabold",
+						"inline",
+						"linkedin",
+						"bluesky",
+						"mailto",
+						"href",
+						"noopener",
+						"noreferrer",
+						"instagram",
+						"youtube",
+						"facebook",
+						"color",
+						"evenodd",
+						"algolia",
+						"kbar",
+						"dialog",
+						"semibold",
+						"sitemap",
+						"colors",
+						"favicon",
+						"favicons",
+						"latin",
+						"google",
+						"webmanifest",
+						"msapplication",
+						"calc",
+						"antialiased",
+						"spellcheck"
+					]
+				}
 			]
-			// "react/prop-types": "off",
-			// "@typescript-eslint/no-unused-vars": "off",
-			// "react/no-unescaped-entities": "off",
-			// "@typescript-eslint/explicit-module-boundary-types": "off",
-			// "@typescript-eslint/no-var-requires": "off",
-			// "@typescript-eslint/ban-ts-comment": "off"
 		}
 	}
 ]

@@ -6,16 +6,5 @@
 	"editor.codeActionsOnSave": {
 		"source.fixAll.eslint": "explicit",
 		"source.fixAll.prettier": "explicit"
-	},
-	"cSpell.words": [
-		"algoliasearch",
-		"anymore",
-		"bouldering",
-		"contentlayer",
-		"mundanities",
-		"Nannestad",
-		"Nannestad's",
-		"nauseum"
-	],
-	"cSpell.language": "en-GB"
+	}
 }

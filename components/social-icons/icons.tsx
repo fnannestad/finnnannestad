@@ -1,3 +1,4 @@
+/* eslint-disable spellcheck/spell-checker */
 import { SVGProps } from "react"
 
 // Icons taken from: https://simpleicons.org/
