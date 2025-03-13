@@ -60,6 +60,18 @@ const config = [
 					aspects: ["invalidHref", "preferButton"]
 				}
 			],
+			"@typescript-eslint/no-unused-vars": [
+				"error",
+				{
+					args: "all",
+					argsIgnorePattern: "^_",
+					caughtErrors: "all",
+					caughtErrorsIgnorePattern: "^_",
+					destructuredArrayIgnorePattern: "^_",
+					varsIgnorePattern: "^_",
+					ignoreRestSiblings: true
+				}
+			],
 			"spellcheck/spell-checker": [
 				"error",
 				{
@@ -108,7 +120,38 @@ const config = [
 						"msapplication",
 						"calc",
 						"antialiased",
-						"spellcheck"
+						"spellcheck",
+						"compat",
+						"contentlayer",
+						"globals",
+						"tsconfig",
+						"plugins",
+						"commonjs",
+						"ecma",
+						"frontmatter",
+						"rehype",
+						"autolink",
+						"preset",
+						"minify",
+						"behavior",
+						"pliny",
+						"nannestad",
+						"yoursite",
+						"nextjs",
+						"vercel",
+						"tailwindcss",
+						"postcss",
+						"analyzer",
+						"amazonaws",
+						"nosniff",
+						"unoptimized",
+						"dist",
+						"picsum",
+						"webpack",
+						"svgr",
+						"docsearch",
+						"vars",
+						"destructured"
 					]
 				}
 			]
