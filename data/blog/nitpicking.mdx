@@ -1,0 +1,48 @@
+---
+title: "The Philosophy of Nitpicking"
+date: "2025-03-24"
+lastmod: "2025-03-24"
+tags: ["nitpicking", "eslint", "prettier", "editorconfig", "knip", "programming", "typescript"]
+draft: true
+summary: "Why you should nitpick, and how you can use linting to do it without making your colleagues hate you"
+authors: ["default"]
+---
+
+- [Why we should all be nitpickers](#why-we-should-all-be-nitpickers)
+- [How to automate it](#how-to-automate-it)
+
+If there was a Nitpickers Anonymous support group, I'd be member number one.
+
+Poorly named variables, incorrect camel-case capitalisation, typos, line breaks not in the right spot, exports that are never imported, ternary statements nested within ternary statements, functions with too many arguments - these are the things that keep me up at night.
+
+In case you're thinking "that doesn't seem so bad, those things would bother me too", then I can assure you that for me it goes to a much deeper pathological level.
+
+If I see someone start a single line comment without a space after the slashes `//like this` it bothers me. What sort of psychopath doesn't stylise their comments `// like this`?
+
+God forbid I stumble across someone committing a string literal that uses a curly quote like this `’` (Unicode U+2019) instead of a perfectly good straight quote `'`.
+
+You may imagine that endlessly requesting changes for such tedious trivialities is not helping me win any friends among my colleagues, and you would be right. But I hope to make the case for two points in this article:
+1. That nitpicking has value
+2. That with the use of some handy tools, we can automate away our nitpicking, both winning back the love of our colleagues, and making their lives easier
+
+## Why we should all be nitpickers
+
+Granted, making the case in defense of spending our valuable time and energy worrying about the unimportant stylistic aspects of code is hard to do.
+
+C. Northcote Parkinson, in 1957, spoke of a concept which has since become known as the [Law of Triviality](https://en.wikipedia.org/wiki/Law_of_triviality), which proposes that the amount of time we tend to spend discussing a problem is inversely proportional to the importance of the problem.
+
+He
+
+1. Less bugs
+2. Less wasted time debating trivialities
+3. Consistent code and user experience
+4. Easier for new starters
+
+## How to automate it
+
+Four tools in order of importance:
+1. ESLint
+2. Prettier
+3. Knip
+4. Editorconfig
+5. tsconfig (bonus point for typescript project, and while not a tool, there is some specific configuration worth mentioning)

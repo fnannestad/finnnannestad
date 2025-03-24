@@ -1,3 +1,13 @@
 {
-	"recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "editorconfig.editorconfig"]
+	"recommendations": [
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"editorconfig.editorconfig",
+		"github.vscode-github-actions",
+		"eamodio.gitlens",
+		"yzhang.markdown-all-in-one",
+		"jock.svg",
+		"bradlc.vscode-tailwindcss",
+		"naumovs.color-highlight"
+	]
 }
