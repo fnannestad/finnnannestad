@@ -10,6 +10,11 @@ authors: ["default"]
 
 - [Why we should all be nitpickers](#why-we-should-all-be-nitpickers)
 - [How to automate it](#how-to-automate-it)
+- [Prettier](#prettier)
+- [EditorConfig](#editorconfig)
+- [Visual Studio Code](#visual-studio-code)
+	- [.vscode/extensions.json](#vscodeextensionsjson)
+	- [.vscode/settings.json](#vscodesettingsjson)
 
 If there was a Nitpickers Anonymous support group, I'd be member number one.
 
@@ -22,6 +27,7 @@ If I see someone start a single line comment without a space after the slashes `
 God forbid I stumble across someone committing a string literal that uses a curly quote like this `’` (Unicode U+2019) instead of a perfectly good straight quote `'`.
 
 You may imagine that endlessly requesting changes for such tedious trivialities is not helping me win any friends among my colleagues, and you would be right. But I hope to make the case for two points in this article:
+
 1. That nitpicking has value
 2. That with the use of some handy tools, we can automate away our nitpicking, both winning back the love of our colleagues, and making their lives easier
 
@@ -41,8 +47,99 @@ He
 ## How to automate it
 
 Four tools in order of importance:
+
 1. ESLint
 2. Prettier
 3. Knip
 4. Editorconfig
 5. tsconfig (bonus point for typescript project, and while not a tool, there is some specific configuration worth mentioning)
+6. VSCode
+7. CI Pipeline
+8. Precommit hooks (prettier lint-staged?)
+
+## Prettier
+
+It might be reasonable to ask, that in a world where ESLint has become so powerful, is there even a need for formatting tools like Prettier or dprint anymore? Why not just let ESLint do everything? Unfortunately for those of us hoping to slim down our number of dev-dependencies by one, ESLint is very much not intended to be used for formatting, to the point where the team has [deprecated all formatting rules and recommends using a dedicated code-formatter instead](https://eslint.org/blog/2023/10/deprecating-formatting-rules).
+
+Prettier is simple, smart and popular, and is worth using in any JavaScript/TypeScript project.
+
+While Prettier can be used with its out-of-the-box defaults and no config file, if you follow my recommendation and also use EditorConfig, it is important that you don't configure Prettier in a way that conflicts with it. Prettier is smart here, and for tabs, tab width and end-of-line will honour what is defined in an `.editorconfig` file, so you're best just leaving these values out.
+
+Based on your preference, there are many further options which you can read about [here](https://prettier.io/docs/options). These can be added to a `.prettierrc` file. It is worth familiarising yourself with these options before working on your customer ESLint rules. Your rule of thumb should be "if Prettier can do it, then don't use ESLint". Some common examples are enforcing standards about usage of single vs double quotes or ending lines with semicolons. These are jobs for prettier.
+
+## EditorConfig
+
+The [EditorConfig](https://editorconfig.org/) project simply defines a file format that specifies coding styles that your IDE of choice will adhere to, [either natively](https://editorconfig.org/#pre-installed) or [with the addition of a plugin](https://editorconfig.org/#download) depending on your editor of choice.
+
+Although formatters like the aforementioned Prettier have very wide support for different file types, there will inevitably crop up an example in your codebase at some point which is not supported (a couple of common examples are files like `Makefile` and `.gitignore`), so having an editor-level formatter which supports all text-based files will help maintain consistency for these edge cases.
+
+Here is the `.editorconfig` setup I use, which you can tweak based on taste.
+
+```shell
+# Top-most EditorConfig file
+root = true
+
+[*]
+end_of_line = lf # Unix-style newlines
+insert_final_newline = true # Newline ending every file
+trim_trailing_whitespace = true # Trim whitespace preceding newlines
+charset = utf-8 # Enforce consistent character set
+indent_style = tab # Matter of taste
+index_size = 4 # Number of columns used for indentation
+```
+
+When an inevitable exception comes up where you have a particular file type that needs to be formatted differently, you can simply override your `[*]` config for that type. For example:
+
+```shell
+# Continuing on from example above
+
+[*.{yaml,yml}]
+index_size = 2
+```
+
+Unlike all the other tools mentioned in this article, EditorConfig, unfortunately, is not something we are able to run in our CI pipelines to fail a build if an offense occurs.
+
+## Visual Studio Code
+
+While there is no guarantee everyone working on your project uses VS Code, in 2025 it continues to be ubiquitous in the industry so is worth mentioning.
+Making a `.vscode` directory in our project enables us to add a couple of useful files for encouraging consistency for developers.
+
+### .vscode/extensions.json
+
+Here we can add a list of recommended extensions for which any developer opening your project in VS Code will be prompted to install with a dialog that looks like this:
+
+![VS Code Recommended Extension](/static/images/nitpicking/vscode_recommended_extension.webp)
+
+Essential extensions to recommend, if you're following along with this article, are [EditorConfig for VS Code](https://marketplace.visualstudio.com/items?itemName=EditorConfig.EditorConfig), [Prettier - Code formatter](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) and [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint).
+
+```json
+{
+	"recommendations": [
+		"dbaeumer.vscode-eslint",
+		"esbenp.prettier-vscode",
+		"editorconfig.editorconfig"
+	]
+}
+```
+
+_If you want to add further extensions to `recommendations`, you can find the correct name to pass in under a value "Unique Identifier" found on the extension's marketplace page._
+
+### .vscode/settings.json
+
+VS Code has two sets of settings:
+
+1. User Settings - This is your local VS Code configuration that will apply across any project that you open.
+2. Workspace Settings - This applies just to the current project you have open, and is committed to source control.
+
+We have no control over what our colleagues use for number 1, so number 2, workspace settings, is the important one.
+There are many powerful configuration options we have at our disposal here, but to achieve what we are going for with this article and have all our team automatically format with Prettier and lint with ESLint on save, we must at least have the following in `settings.json`.
+
+```json
+{
+	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	}
+}
+```
