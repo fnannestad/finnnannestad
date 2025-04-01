@@ -1,10 +1,10 @@
 {
-  "miscellaneous": 1,
   "nitpicking": 1,
   "eslint": 1,
   "prettier": 1,
   "editorconfig": 1,
   "knip": 1,
   "programming": 1,
-  "typescript": 1
+  "typescript": 1,
+  "miscellaneous": 1
 }

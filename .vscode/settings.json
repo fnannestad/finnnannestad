@@ -2,12 +2,12 @@
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"editor.formatOnSave": true,
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.insertSpaces": false,
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": "explicit",
-		"source.fixAll.prettier": "explicit"
+		"source.fixAll.eslint": "explicit"
 	},
 	"files.associations": {
-        "*.mdx": "markdown"
-    }
+		"*.mdx": "markdown"
+	}
 }

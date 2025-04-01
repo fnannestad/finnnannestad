@@ -13,8 +13,12 @@ authors: ["default"]
 - [Prettier](#prettier)
 - [EditorConfig](#editorconfig)
 - [Visual Studio Code](#visual-studio-code)
-	- [.vscode/extensions.json](#vscodeextensionsjson)
-	- [.vscode/settings.json](#vscodesettingsjson)
+    - [.vscode/extensions.json](#vscodeextensionsjson)
+    - [.vscode/settings.json](#vscodesettingsjson)
+- [tsconfig](#tsconfig)
+- [Knip](#knip)
+- [How do we enforce all of this?](#how-do-we-enforce-all-of-this)
+- [ESLint](#eslint)
 
 If there was a Nitpickers Anonymous support group, I'd be member number one.
 
@@ -114,11 +118,7 @@ Essential extensions to recommend, if you're following along with this article, 
 
 ```json
 {
-	"recommendations": [
-		"dbaeumer.vscode-eslint",
-		"esbenp.prettier-vscode",
-		"editorconfig.editorconfig"
-	]
+	"recommendations": ["dbaeumer.vscode-eslint", "esbenp.prettier-vscode", "editorconfig.editorconfig"]
 }
 ```
 
@@ -139,7 +139,64 @@ There are many powerful configuration options we have at our disposal here, but 
 	"editor.formatOnSave": true,
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": "explicit"
 	}
 }
 ```
+
+## tsconfig
+
+This doesn't fall very nicely into the category of linting and formatting, but there are a few type-checking configuration options for the TypeScript compiler that are simply too powerful not to mention, both from a code cleanliness and reduced-risk-of-bugs perspective.
+
+The easiest way to get your configuration into ship-shape is to go and add everything marked as "Recommended" in [TypeScript's documentation](https://www.typescriptlang.org/tsconfig/). There are a few, however, worth drawing extra attention to.
+
+The absolute number one thing you should turn on is `strict: true`, which enables all of
+
+- `alwaysStrict`
+- `strictNullChecks`
+- `strictBindCallApply`
+- `strictBuiltinIteratorReturn`
+- `strictFunctionTypes`
+- `strictPropertyInitialization`
+- `noImplicitAny`
+- `noImplicitThis`
+- `useUnknownInCatchVariables`
+
+Special emphasis goes to `strictNullChecks`. If you don't like seeing `Uncaught TypeError: Cannot read properties of undefined`, this is an option for you.
+
+A few more rules that are valuable for cleaner code are:
+
+- `allowUnreachableCode` (as `false`)
+- `noUnusedLocals`
+- `noUnusedParameters`
+
+## Knip
+
+This might be the lesser known tool out of all that I am going through, however I can't overemphasise how much I love it. While ESLint is great at helping you identify and resolve problematic patterns within files, it is not so useful for catching issues that require looking across multiple files, or even dependencies. This is where Knip comes in.
+
+The [Knip documentation](https://knip.dev/explanations/why-use-knip) has a very good overview of why to use this tool, but for me the two most important things are:
+
+1. Identification of dead code (very importantly, this includes exported code which is never imported anywhere)
+2. Identification of unused dependencies
+
+Knip will run without any config file, however depending on the structure and the sort of dependencies you have in your project, it may come up with some false flags, or fail to identify some legitimate issues, in which case we need to tinker with it a little bit.
+
+## How do we enforce all of this?
+
+Having handy-dandy linting and formatting rules is all well and good, but if we are trusting developers to follow these, run commands locally before committing and use appropriate IDE extensions, we're in for some sore disappointment.
+
+To both optimise the developer experience, and remove the possibility for breaches of our rules to enter our `master` branch, we should use a combination of the following:
+
+1. Recommended IDE extensions and settings that result in autoformatting/linting on save of files
+2. Pre-commit hooks that run (and potentially autofix) issues prior to committing
+3. Build pipeline check to fail our build and prevent merging our pull request to master if the above two fail.
+
+## ESLint
+
+And now we're on to the big-daddy of all the tools I've mentioned here.
+
+ESLint is possibly the most powerful static analysis tool we have at our disposal for JavaScript and TypeScript code thanks a lot to its massive suite of native and third-party rules and plugins.
+
+Due to the extent of these rules, it can also be a bit overwhelming to know where to start and know what rules you should be turning on. I'll aim to demystify it a little and demonstrate that we can get 99% of the benefit of ESLint with just a handful of plugins, and no complex configuration.
+
+Use with prettier recommends eslint-config-prettier (not plugin) https://prettier.io/docs/integrating-with-linters
