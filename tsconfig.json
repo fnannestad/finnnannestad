@@ -5,6 +5,7 @@
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
 		"skipLibCheck": true,
+		"typeRoots": ["./node_modules/@types", "./custom-types"],
 		"strict": false,
 		"forceConsistentCasingInFileNames": true,
 		"noEmit": true,
@@ -40,7 +41,8 @@
 		"**/*.json",
 		".contentlayer/generated",
 		".contentlayer/generated/**/*.json",
-		".next/types/**/*.ts"
+		".next/types/**/*.ts",
+		"custom-types"
 	],
 	"exclude": ["node_modules"]
 }

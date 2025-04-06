@@ -5840,6 +5840,7 @@ __metadata:
     globals: ^16.0.0
     hast-util-from-html-isomorphic: ^2.0.0
     husky: ^9.1.7
+    jiti: ^2.4.2
     knip: ^5.47.0
     lint-staged: ^15.5.0
     next: ^15.2.4
