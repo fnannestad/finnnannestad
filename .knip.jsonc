@@ -1,6 +1,20 @@
 {
 	"$schema": "https://unpkg.com/knip@5/schema.json",
-	"ignore": [
-		"contentlayer.config.ts"
+	"ignore": ["contentlayer.config.ts"],
+	"ignoreDependencies": [
+		"@svgr/webpack", // Used in `next.config.js`
+		"tailwindcss", // Tailwind
+		"@tailwindcss/forms", // Used by tailwind
+		"@tailwindcss/typography", // Used by tailwind
+		"hast-util-from-html-isomorphic", // Used in contentlayer config
+		"rehype-autolink-headings", // Used in contentlayer config
+		"rehype-citation", // Used in contentlayer config
+		"rehype-preset-minify", // Used in contentlayer config
+		"rehype-prism-plus", // Used in contentlayer config
+		"rehype-slug", // Used in contentlayer config
+		"reading-time", // Used in contentlayer config
+		"remark-gfm", // Used in contentlayer config
+		"remark-math", // Used in contentlayer config
+		"postcss" // Required by tailwind
 	]
-  }
+}
