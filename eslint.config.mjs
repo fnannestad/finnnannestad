@@ -2,7 +2,6 @@ import tseslint from "typescript-eslint"
 import next from "@next/eslint-plugin-next"
 import eslintConfigPrettier from "eslint-config-prettier/flat"
 import globals from "globals"
-import tsParser from "@typescript-eslint/parser"
 import react from "eslint-plugin-react"
 import js from "@eslint/js"
 import spellcheck from "eslint-plugin-spellcheck"
@@ -30,10 +29,7 @@ export default tseslint.config(
 				...globals.amd,
 				...globals.node
 			},
-
-			parser: tsParser,
-			ecmaVersion: 5,
-			sourceType: "commonjs",
+			ecmaVersion: 2020,
 			parserOptions: {
 				project: true,
 				tsconfigRootDir: import.meta.dirname
