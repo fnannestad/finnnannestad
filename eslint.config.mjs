@@ -7,7 +7,6 @@ import react from "eslint-plugin-react"
 import js from "@eslint/js"
 import spellcheck from "eslint-plugin-spellcheck"
 import stylistic from "@stylistic/eslint-plugin"
-import reactRefresh from "eslint-plugin-react-refresh"
 import preferFunctionComponent from "eslint-plugin-react-prefer-function-component/config"
 import skipWords from "./spellcheck-skip-words.mjs"
 
@@ -15,13 +14,14 @@ export default tseslint.config(
 	{
 		ignores: [".contentlayer", ".next", ".yarn"]
 	},
+	js.configs.recommended,
 	tseslint.configs.eslintRecommended,
 	tseslint.configs.strictTypeChecked,
 	tseslint.configs.stylisticTypeChecked,
 	stylistic.configs.recommended,
 	preferFunctionComponent.configs.recommended,
-	reactRefresh.configs.recommended,
-	js.configs.recommended,
+	react.configs.flat.recommended,
+	react.configs.flat["jsx-runtime"],
 	eslintConfigPrettier,
 	{
 		languageOptions: {
@@ -71,6 +71,13 @@ export default tseslint.config(
 			"react/jsx-no-useless-fragment": ["error", { allowExpressions: true }],
 			"react/jsx-newline": ["error", { prevent: true }],
 			"react/self-closing-comp": "error",
+			"@typescript-eslint/no-unused-vars": [
+				"error",
+				{
+					argsIgnorePattern: "^_",
+					varsIgnorePattern: "^_"
+				}
+			],
 			"spellcheck/spell-checker": [
 				"error",
 				{
@@ -82,7 +89,11 @@ export default tseslint.config(
 					],
 					skipWords
 				}
-			]
+			],
+			// contentlayer's typing makes it hard to use these rules
+			"@typescript-eslint/no-unsafe-assignment": "off",
+			"@typescript-eslint/no-unsafe-member-access": "off",
+			"@typescript-eslint/no-non-null-assertion": "off"
 		}
 	}
 )

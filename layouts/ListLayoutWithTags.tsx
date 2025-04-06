@@ -41,7 +41,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 				)}
 				{prevPage && (
 					<Link
-						href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${currentPage - 1}`}
+						href={currentPage - 1 === 1 ? `/${basePath}/` : `/${basePath}/page/${String(currentPage - 1)}`}
 						rel="prev"
 					>
 						Previous
@@ -56,7 +56,7 @@ function Pagination({ totalPages, currentPage }: PaginationProps) {
 					</button>
 				)}
 				{nextPage && (
-					<Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
+					<Link href={`/${basePath}/page/${String(currentPage + 1)}`} rel="next">
 						Next
 					</Link>
 				)}
@@ -99,7 +99,7 @@ export default function ListLayoutWithTags({ posts, title, initialDisplayPosts =
 									<li key={t} className="my-3">
 										{decodeURI(pathname.split("/tags/")[1]) === slug(t) ? (
 											<h3 className="text-primary-500 inline px-3 py-2 text-sm font-bold uppercase">
-												{`${t} (${tagCounts[t]})`}
+												{`${t} (${String(tagCounts[t])})`}
 											</h3>
 										) : (
 											<Link
@@ -107,7 +107,7 @@ export default function ListLayoutWithTags({ posts, title, initialDisplayPosts =
 												className="hover:text-primary-500 dark:hover:text-primary-500 px-3 py-2 text-sm font-medium text-gray-500 uppercase dark:text-gray-300"
 												aria-label={`View posts tagged ${t}`}
 											>
-												{`${t} (${tagCounts[t]})`}
+												{`${t} (${String(tagCounts[t])})`}
 											</Link>
 										)}
 									</li>

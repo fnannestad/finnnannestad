@@ -3,10 +3,7 @@ import { KBarButton } from "pliny/search/KBarButton"
 import siteMetadata from "@/data/siteMetadata"
 
 const SearchButton = () => {
-	if (
-		siteMetadata.search &&
-		(siteMetadata.search.provider === "algolia" || siteMetadata.search.provider === "kbar")
-	) {
+	if (siteMetadata.search) {
 		const SearchButtonWrapper = siteMetadata.search.provider === "algolia" ? AlgoliaButton : KBarButton
 
 		return (

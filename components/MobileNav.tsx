@@ -13,9 +13,11 @@ const MobileNav = () => {
 	const onToggleNav = () => {
 		setNavShow((status) => {
 			if (status) {
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				enableBodyScroll(navRef.current)
 			} else {
 				// Prevent scrolling
+				// eslint-disable-next-line @typescript-eslint/no-unsafe-call
 				disableBodyScroll(navRef.current)
 			}
 			return !status
@@ -23,6 +25,7 @@ const MobileNav = () => {
 	}
 
 	useEffect(() => {
+		// eslint-disable-next-line @typescript-eslint/no-unsafe-return
 		return clearAllBodyScrollLocks
 	})
 

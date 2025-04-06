@@ -1,11 +1,13 @@
 import Link from "@/components/Link"
 import Tag from "@/components/Tag"
 import siteMetadata from "@/data/siteMetadata"
+import { Blog } from "contentlayer/generated"
+import { CoreContent } from "pliny/utils/contentlayer"
 import { formatDate } from "pliny/utils/formatDate"
 
 const MAX_DISPLAY = 5
 
-export default function Home({ posts }) {
+export default function Home({ posts }: { posts: CoreContent<Blog>[] }) {
 	return (
 		<>
 			<div className="divide-y divide-gray-200 dark:divide-gray-700">

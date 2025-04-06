@@ -7,7 +7,7 @@ import { notFound } from "next/navigation"
 
 const POSTS_PER_PAGE = 5
 
-export const generateStaticParams = async () => {
+export const generateStaticParams = () => {
 	const tagCounts = tagData as Record<string, number>
 	return Object.keys(tagCounts).flatMap((tag) => {
 		const postCount = tagCounts[tag]
@@ -25,7 +25,7 @@ export default async function TagPage(props: { params: Promise<{ tag: string; pa
 	const title = tag[0].toUpperCase() + tag.split(" ").join("-").slice(1)
 	const pageNumber = parseInt(params.page)
 	const filteredPosts = allCoreContent(
-		sortPosts(allBlogs.filter((post) => post.tags && post.tags.map((t) => slug(t)).includes(tag)))
+		sortPosts(allBlogs.filter((post) => post.tags.map((t) => slug(t)).includes(tag)))
 	)
 	const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
 

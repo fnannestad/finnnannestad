@@ -4,7 +4,6 @@ import { components } from "@/components/MDXComponents"
 import { MDXLayoutRenderer } from "pliny/mdx-components"
 import { sortPosts, coreContent, allCoreContent } from "pliny/utils/contentlayer"
 import { allBlogs, allAuthors } from "contentlayer/generated"
-import type { Authors, Blog } from "contentlayer/generated"
 import PostSimple from "@/layouts/PostSimple"
 import PostLayout from "@/layouts/PostLayout"
 import PostBanner from "@/layouts/PostBanner"
@@ -23,17 +22,17 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 	const params = await props.params
 	const slug = decodeURI(params.slug.join("/"))
 	const post = allBlogs.find((p) => p.slug === slug)
-	const authorList = post?.authors || ["default"]
+	const authorList = post?.authors ?? ["default"]
 	const authorDetails = authorList.map((author) => {
-		const authorResults = allAuthors.find((p) => p.slug === author)
-		return coreContent(authorResults!)
+		const authorResults = allAuthors.find((p) => p.slug === author)!
+		return coreContent(authorResults)
 	})
 	if (!post) {
 		return
 	}
 
 	const publishedAt = new Date(post.date).toISOString()
-	const modifiedAt = new Date(post.lastmod || post.date).toISOString()
+	const modifiedAt = new Date(post.lastmod ?? post.date).toISOString()
 	const authors = authorDetails.map((author) => author.name)
 	let imageList = [siteMetadata.socialBanner]
 	if (post.images) {
@@ -69,7 +68,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 	}
 }
 
-export const generateStaticParams = async () => {
+export const generateStaticParams = () => {
 	return allBlogs.map((p) => ({ slug: p.slug.split("/").map((name) => decodeURI(name)) }))
 }
 
@@ -86,7 +85,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
 	const prev = sortedCoreContents[postIndex + 1]
 	const next = sortedCoreContents[postIndex - 1]
 	const post = allBlogs.find((p) => p.slug === slug)!
-	const authorList = post.authors || ["default"]
+	const authorList = post.authors ?? ["default"]
 	const authorDetails = authorList.map((author) => {
 		const authorResults = allAuthors.find((p) => p.slug === author)
 		return coreContent(authorResults!)
@@ -100,7 +99,7 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
 		}
 	})
 
-	const Layout = layouts[post.layout || defaultLayout]
+	const Layout = layouts[post.layout ?? defaultLayout]
 
 	return (
 		<>

@@ -69,5 +69,6 @@ export default [
 	"svgr",
 	"docsearch",
 	"vars",
-	"destructured"
+	"destructured",
+	"eqeqeq"
 ]

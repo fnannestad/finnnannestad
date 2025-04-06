@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-require-imports */
 const { withContentlayer } = require("next-contentlayer2")
 
@@ -55,7 +57,7 @@ const securityHeaders = [
 ]
 
 const output = process.env.EXPORT ? "export" : undefined
-const basePath = process.env.BASE_PATH || undefined
+const basePath = process.env.BASE_PATH ?? undefined
 const unoptimized = process.env.UNOPTIMIZED ? true : undefined
 
 /**
@@ -80,7 +82,7 @@ module.exports = () => {
 			],
 			unoptimized
 		},
-		async headers() {
+		headers() {
 			return [
 				{
 					source: "/(.*)",

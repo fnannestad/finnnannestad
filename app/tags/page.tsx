@@ -6,7 +6,7 @@ import { genPageMetadata } from "app/seo"
 
 export const metadata = genPageMetadata({ title: "Tags", description: "Things I blog about" })
 
-export default async function Page() {
+export default function Page() {
 	const tagCounts = tagData as Record<string, number>
 	const tagKeys = Object.keys(tagCounts)
 	const sortedTags = tagKeys.sort((a, b) => tagCounts[b] - tagCounts[a])
@@ -28,7 +28,7 @@ export default async function Page() {
 								className="-ml-2 text-sm font-semibold text-gray-600 uppercase dark:text-gray-300"
 								aria-label={`View posts tagged ${t}`}
 							>
-								{` (${tagCounts[t]})`}
+								{` (${String(tagCounts[t])})`}
 							</Link>
 						</div>
 					)

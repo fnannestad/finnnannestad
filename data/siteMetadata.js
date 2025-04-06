@@ -8,7 +8,7 @@ const siteMetadata = {
 	theme: "system", // system, dark or light
 	siteUrl: "https://finnnannestad.com",
 	siteRepo: "https://github.com/fnannestad/finnnannestad",
-	socialBanner: `${process.env.BASE_PATH || ""}/static/images/twitter-card.png`,
+	socialBanner: `${process.env.BASE_PATH ?? ""}/static/images/twitter-card.png`,
 	// mastodon: 'https://mastodon.social/@mastodonuser',
 	// email: 'address@yoursite.com',
 	github: "https://github.com/fnannestad",
@@ -28,7 +28,7 @@ const siteMetadata = {
 	search: {
 		provider: "kbar", // kbar or algolia
 		kbarConfig: {
-			searchDocumentsPath: `${process.env.BASE_PATH || ""}/search.json` // path to load documents to search
+			searchDocumentsPath: `${process.env.BASE_PATH ?? ""}/search.json` // path to load documents to search
 		}
 		// provider: 'algolia',
 		// algoliaConfig: {

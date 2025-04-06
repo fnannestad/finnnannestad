@@ -56,13 +56,17 @@ const ThemeSwitch = () => {
 		setMounted(true)
 	}, [])
 
+	let icon = <Blank />
+
+	if (mounted) {
+		icon = resolvedTheme === "dark" ? <Moon /> : <Sun />
+	}
+
 	return (
 		<div className="flex items-center">
 			<Menu as="div" className="relative inline-block text-left">
 				<div className="hover:text-primary-500 dark:hover:text-primary-400 flex items-center justify-center">
-					<MenuButton aria-label="Theme switcher">
-						{mounted ? resolvedTheme === "dark" ? <Moon /> : <Sun /> : <Blank />}
-					</MenuButton>
+					<MenuButton aria-label="Theme switcher">{icon}</MenuButton>
 				</div>
 				<Transition
 					as={Fragment}

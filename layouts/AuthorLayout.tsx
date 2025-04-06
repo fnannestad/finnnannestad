@@ -10,7 +10,7 @@ interface Props {
 
 export default function AuthorLayout({ children, content }: Props) {
 	const { name, avatar, occupation, company, email, twitter, bluesky, linkedin, github } = content
-	const shouldShowSocialIconsSection = email || github || linkedin || twitter || bluesky
+	const shouldShowSocialIconsSection = email ?? github ?? linkedin ?? twitter ?? bluesky
 
 	return (
 		<div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -29,7 +29,7 @@ export default function AuthorLayout({ children, content }: Props) {
 					<div className="text-gray-500 dark:text-gray-400">{company}</div>
 					{shouldShowSocialIconsSection && (
 						<div className="flex space-x-3 pt-6">
-							<SocialIcon kind="mail" href={`mailto:${email}`} />
+							{email && <SocialIcon kind="mail" href={`mailto:${email}`} />}
 							<SocialIcon kind="github" href={github} />
 							<SocialIcon kind="linkedin" href={linkedin} />
 							<SocialIcon kind="x" href={twitter} />

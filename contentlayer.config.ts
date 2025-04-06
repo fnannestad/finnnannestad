@@ -23,6 +23,7 @@ import rehypePresetMinify from "rehype-preset-minify"
 import siteMetadata from "./data/siteMetadata"
 import { allCoreContent, sortPosts } from "pliny/utils/contentlayer.js"
 import prettier from "prettier"
+import { Blog as ContentLayerBlog } from "contentlayer/generated"
 
 const root = process.cwd()
 const isProduction = process.env.NODE_ENV === "production"
@@ -41,6 +42,7 @@ const icon = fromHtmlIsomorphic(
 )
 
 const computedFields: ComputedFields = {
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 	readingTime: { type: "json", resolve: (doc) => readingTime(doc.body.raw) },
 	slug: {
 		type: "string",
@@ -54,16 +56,17 @@ const computedFields: ComputedFields = {
 		type: "string",
 		resolve: (doc) => doc._raw.sourceFilePath
 	},
+	// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
 	toc: { type: "json", resolve: (doc) => extractTocHeadings(doc.body.raw) }
 }
 
 /**
  * Count the occurrences of all tags across blog posts and write to json file
  */
-async function createTagCount(allBlogs) {
+async function createTagCount(allBlogs: ContentLayerBlog[]) {
 	const tagCount: Record<string, number> = {}
 	allBlogs.forEach((file) => {
-		if (file.tags && (!isProduction || file.draft !== true)) {
+		if (!isProduction || file.draft !== true) {
 			file.tags.forEach((tag) => {
 				const formattedTag = slug(tag)
 				if (formattedTag in tagCount) {
@@ -78,7 +81,7 @@ async function createTagCount(allBlogs) {
 	writeFileSync("./app/tag-data.json", formatted)
 }
 
-function createSearchIndex(allBlogs) {
+function createSearchIndex(allBlogs: ContentLayerBlog[]) {
 	if (siteMetadata.search?.provider === "kbar" && siteMetadata.search.kbarConfig.searchDocumentsPath) {
 		writeFileSync(
 			`public/${path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)}`,
@@ -114,7 +117,7 @@ export const Blog = defineDocumentType(() => ({
 				"@type": "BlogPosting",
 				"headline": doc.title,
 				"datePublished": doc.date,
-				"dateModified": doc.lastmod || doc.date,
+				"dateModified": doc.lastmod ?? doc.date,
 				"description": doc.summary,
 				"image": doc.images ? doc.images[0] : siteMetadata.socialBanner,
 				"url": `${siteMetadata.siteUrl}/${doc._raw.flattenedPath}`
@@ -167,7 +170,7 @@ export default makeSource({
 	},
 	onSuccess: async (importData) => {
 		const { allBlogs } = await importData()
-		createTagCount(allBlogs)
+		await createTagCount(allBlogs)
 		createSearchIndex(allBlogs)
 	}
 })

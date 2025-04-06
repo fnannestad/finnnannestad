@@ -5678,15 +5678,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-refresh@npm:^0.4.19":
-  version: 0.4.19
-  resolution: "eslint-plugin-react-refresh@npm:0.4.19"
-  peerDependencies:
-    eslint: ">=8.40"
-  checksum: b676d7d5a149329d4eb7359711d1efa553e3b83f4070e8ae03121ba26bd051b7e3d70d89fa847e97abdc91319066c443ac72d86976d3844012e72e32dad9e883
-  languageName: node
-  linkType: hard
-
 "eslint-plugin-react@npm:^7.37.5":
   version: 7.37.5
   resolution: "eslint-plugin-react@npm:7.37.5"
@@ -6120,7 +6111,6 @@ __metadata:
     eslint-config-prettier: ^10.1.1
     eslint-plugin-react: ^7.37.5
     eslint-plugin-react-prefer-function-component: ^4.0.1
-    eslint-plugin-react-refresh: ^0.4.19
     eslint-plugin-spellcheck: ^0.0.20
     github-slugger: ^2.0.0
     globals: ^15.12.0
