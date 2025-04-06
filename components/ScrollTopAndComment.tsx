@@ -8,12 +8,17 @@ const ScrollTopAndComment = () => {
 
 	useEffect(() => {
 		const handleWindowScroll = () => {
-			if (window.scrollY > 50) setShow(true)
-			else setShow(false)
+			if (window.scrollY > 50) {
+				setShow(true)
+			} else {
+				setShow(false)
+			}
 		}
 
 		window.addEventListener("scroll", handleWindowScroll)
-		return () => window.removeEventListener("scroll", handleWindowScroll)
+		return () => {
+			window.removeEventListener("scroll", handleWindowScroll)
+		}
 	}, [])
 
 	const handleScrollTop = () => {

@@ -56,7 +56,6 @@ const MobileNav = () => {
 					>
 						<div className="fixed inset-0 z-60 bg-black/25" />
 					</TransitionChild>
-
 					<TransitionChild
 						as={Fragment}
 						enter="transition ease-in-out duration-300 transform"
@@ -83,7 +82,6 @@ const MobileNav = () => {
 									</Link>
 								))}
 							</nav>
-
 							<button
 								className="hover:text-primary-500 dark:hover:text-primary-400 fixed top-7 right-4 z-80 h-16 w-16 p-4 text-gray-900 dark:text-gray-100"
 								aria-label="Toggle Menu"

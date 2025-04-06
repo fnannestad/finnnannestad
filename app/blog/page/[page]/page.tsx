@@ -15,7 +15,7 @@ export const generateStaticParams = async () => {
 export default async function Page(props: { params: Promise<{ page: string }> }) {
 	const params = await props.params
 	const posts = allCoreContent(sortPosts(allBlogs))
-	const pageNumber = parseInt(params.page as string)
+	const pageNumber = parseInt(params.page)
 	const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
 
 	// Return 404 for invalid page numbers or empty pages

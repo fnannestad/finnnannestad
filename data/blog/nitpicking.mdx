@@ -200,3 +200,28 @@ ESLint is possibly the most powerful static analysis tool we have at our disposa
 Due to the extent of these rules, it can also be a bit overwhelming to know where to start and know what rules you should be turning on. I'll aim to demystify it a little and demonstrate that we can get 99% of the benefit of ESLint with just a handful of plugins, and no complex configuration.
 
 Use with prettier recommends eslint-config-prettier (not plugin) https://prettier.io/docs/integrating-with-linters
+
+// /\*_
+// _ Plugins to add
+// _ - import (no restricted paths) (eslint-plugin-import??)
+// _ - no-smart-quotes
+// _ - eslint-config-prettier (prettier recommends this vs plugin-prettier)
+// _ - spellcheck
+// _ - todo-plz
+// _ - check-file (enforce file names)
+// _
+// _ ESlint next includes recommended:
+// _ - eslint-plugin-react
+// _ - eslint-plugin-react-hooks
+// _ - eslint-plugin-next
+// _ - typescript-eslint/recommended
+// _
+// _ Plugin react (not many on in recommended):
+// _ - forbid-component-props
+// _
+// _ Variable naming
+// _ - no-restricted-syntax without type info
+// _ - naming-convention with type information
+// _/
+
+yarn add --dev jiti // for ts eslint config

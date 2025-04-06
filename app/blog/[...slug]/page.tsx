@@ -26,7 +26,7 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 	const authorList = post?.authors || ["default"]
 	const authorDetails = authorList.map((author) => {
 		const authorResults = allAuthors.find((p) => p.slug === author)
-		return coreContent(authorResults as Authors)
+		return coreContent(authorResults!)
 	})
 	if (!post) {
 		return
@@ -85,15 +85,15 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
 
 	const prev = sortedCoreContents[postIndex + 1]
 	const next = sortedCoreContents[postIndex - 1]
-	const post = allBlogs.find((p) => p.slug === slug) as Blog
-	const authorList = post?.authors || ["default"]
+	const post = allBlogs.find((p) => p.slug === slug)!
+	const authorList = post.authors || ["default"]
 	const authorDetails = authorList.map((author) => {
 		const authorResults = allAuthors.find((p) => p.slug === author)
-		return coreContent(authorResults as Authors)
+		return coreContent(authorResults!)
 	})
 	const mainContent = coreContent(post)
 	const jsonLd = post.structuredData
-	jsonLd["author"] = authorDetails.map((author) => {
+	jsonLd.author = authorDetails.map((author) => {
 		return {
 			"@type": "Person",
 			"name": author.name

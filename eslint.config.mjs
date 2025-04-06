@@ -1,37 +1,29 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin"
+import tseslint from "typescript-eslint"
+import next from "@next/eslint-plugin-next"
+import eslintConfigPrettier from "eslint-config-prettier/flat"
 import globals from "globals"
 import tsParser from "@typescript-eslint/parser"
-import path from "node:path"
-import { fileURLToPath } from "node:url"
+import react from "eslint-plugin-react"
 import js from "@eslint/js"
-import { FlatCompat } from "@eslint/eslintrc"
 import spellcheck from "eslint-plugin-spellcheck"
+import stylistic from "@stylistic/eslint-plugin"
+import reactRefresh from "eslint-plugin-react-refresh"
+import preferFunctionComponent from "eslint-plugin-react-prefer-function-component/config"
+import skipWords from "./spellcheck-skip-words.mjs"
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const compat = new FlatCompat({
-	baseDirectory: __dirname
-})
-
-const config = [
+export default tseslint.config(
 	{
 		ignores: [".contentlayer", ".next", ".yarn"]
 	},
+	tseslint.configs.eslintRecommended,
+	tseslint.configs.strictTypeChecked,
+	tseslint.configs.stylisticTypeChecked,
+	stylistic.configs.recommended,
+	preferFunctionComponent.configs.recommended,
+	reactRefresh.configs.recommended,
 	js.configs.recommended,
-	...compat.extends(
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"plugin:jsx-a11y/recommended",
-		"plugin:prettier/recommended",
-		"next",
-		"next/core-web-vitals"
-	),
+	eslintConfigPrettier,
 	{
-		plugins: {
-			"@typescript-eslint": typescriptEslint,
-			"spellcheck": spellcheck
-		},
-
 		languageOptions: {
 			globals: {
 				...globals.browser,
@@ -42,36 +34,43 @@ const config = [
 			parser: tsParser,
 			ecmaVersion: 5,
 			sourceType: "commonjs",
-
 			parserOptions: {
 				project: true,
-				tsconfigRootDir: __dirname
+				tsconfigRootDir: import.meta.dirname
 			}
 		},
-
+		plugins: {
+			"@next/next": next,
+			react,
+			spellcheck
+		},
+		settings: {
+			react: {
+				version: "detect"
+			}
+		},
 		rules: {
-			"prettier/prettier": "error",
-			"react/react-in-jsx-scope": "off",
-			"jsx-a11y/anchor-is-valid": [
-				"error",
-				{
-					components: ["Link"],
-					specialLink: ["hrefLeft", "hrefRight"],
-					aspects: ["invalidHref", "preferButton"]
-				}
-			],
-			"@typescript-eslint/no-unused-vars": [
-				"error",
-				{
-					args: "all",
-					argsIgnorePattern: "^_",
-					caughtErrors: "all",
-					caughtErrorsIgnorePattern: "^_",
-					destructuredArrayIgnorePattern: "^_",
-					varsIgnorePattern: "^_",
-					ignoreRestSiblings: true
-				}
-			],
+			...next.configs["core-web-vitals"].rules,
+			"spaced-comment": ["error", "always", { markers: ["/"] }],
+			"no-unneeded-ternary": "error",
+			"prefer-const": "error",
+			"max-params": ["error", 5],
+			"no-duplicate-imports": "error",
+			"no-self-compare": "error",
+			"no-template-curly-in-string": "error",
+			"no-useless-assignment": "error",
+			"no-useless-rename": "error",
+			"no-nested-ternary": "error",
+			"curly": "error",
+			"default-case-last": "error",
+			"default-param-last": "error",
+			"eqeqeq": "error",
+			"prefer-template": "error",
+			"react/jsx-curly-brace-presence": ["error", { props: "never", children: "never" }],
+			"react/jsx-fragments": ["error", "syntax"],
+			"react/jsx-no-useless-fragment": ["error", { allowExpressions: true }],
+			"react/jsx-newline": ["error", { prevent: true }],
+			"react/self-closing-comp": "error",
 			"spellcheck/spell-checker": [
 				"error",
 				{
@@ -81,82 +80,9 @@ const config = [
 						// Ordinals, m (meters) and CSS (vw, vh)
 						"(?<=[0-9])(?:st|nd|rd|th|m|vw|vh)"
 					],
-					skipWords: [
-						"lang",
-						"gray",
-						"blog",
-						"blogs",
-						"lastmod",
-						"grotesk",
-						"center",
-						"uppercase",
-						"nowrap",
-						"whitespace",
-						"repo",
-						"extrabold",
-						"inline",
-						"linkedin",
-						"bluesky",
-						"mailto",
-						"href",
-						"noopener",
-						"noreferrer",
-						"instagram",
-						"youtube",
-						"facebook",
-						"color",
-						"evenodd",
-						"algolia",
-						"kbar",
-						"dialog",
-						"semibold",
-						"sitemap",
-						"colors",
-						"favicon",
-						"favicons",
-						"latin",
-						"google",
-						"webmanifest",
-						"msapplication",
-						"calc",
-						"antialiased",
-						"spellcheck",
-						"compat",
-						"contentlayer",
-						"globals",
-						"tsconfig",
-						"plugins",
-						"commonjs",
-						"ecma",
-						"frontmatter",
-						"rehype",
-						"autolink",
-						"preset",
-						"minify",
-						"behavior",
-						"pliny",
-						"nannestad",
-						"yoursite",
-						"nextjs",
-						"vercel",
-						"tailwindcss",
-						"postcss",
-						"analyzer",
-						"amazonaws",
-						"nosniff",
-						"unoptimized",
-						"dist",
-						"picsum",
-						"webpack",
-						"svgr",
-						"docsearch",
-						"vars",
-						"destructured"
-					]
+					skipWords
 				}
 			]
 		}
 	}
-]
-
-export default config
+)

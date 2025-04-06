@@ -40,9 +40,9 @@ const Monitor = () => (
 		strokeLinejoin="round"
 		className="group:hover:text-gray-100 h-6 w-6"
 	>
-		<rect x="3" y="3" width="14" height="10" rx="2" ry="2"></rect>
-		<line x1="7" y1="17" x2="13" y2="17"></line>
-		<line x1="10" y1="13" x2="10" y2="17"></line>
+		<rect x="3" y="3" width="14" height="10" rx="2" ry="2" />
+		<line x1="7" y1="17" x2="13" y2="17" />
+		<line x1="10" y1="13" x2="10" y2="17" />
 	</svg>
 )
 const Blank = () => <svg className="h-6 w-6" />
@@ -52,7 +52,9 @@ const ThemeSwitch = () => {
 	const { theme, setTheme, resolvedTheme } = useTheme()
 
 	// When mounted on client, now we can show the UI
-	useEffect(() => setMounted(true), [])
+	useEffect(() => {
+		setMounted(true)
+	}, [])
 
 	return (
 		<div className="flex items-center">

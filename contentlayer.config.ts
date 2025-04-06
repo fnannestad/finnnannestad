@@ -79,7 +79,7 @@ async function createTagCount(allBlogs) {
 }
 
 function createSearchIndex(allBlogs) {
-	if (siteMetadata?.search?.provider === "kbar" && siteMetadata.search.kbarConfig.searchDocumentsPath) {
+	if (siteMetadata.search?.provider === "kbar" && siteMetadata.search.kbarConfig.searchDocumentsPath) {
 		writeFileSync(
 			`public/${path.basename(siteMetadata.search.kbarConfig.searchDocumentsPath)}`,
 			JSON.stringify(allCoreContent(sortPosts(allBlogs)))
