@@ -17,6 +17,18 @@ summary: "Why you should nitpick, and how you can use linting to do it without m
 authors: ["default"]
 ---
 
+If there was a Nitpickers Anonymous support group, I'd be member number one.
+
+Poorly named variables, typos, line breaks missing (or in places they shouldn't be), exports that are never imported, ternary statements nested within ternary statements, functions with too many arguments - these are the things that keep me up at night.
+
+In case you're thinking "that doesn't seem so bad, those things would bother me too", then I can assure you that for me it goes to a much more pathological level.
+
+If I see someone start a single line comment without a space after the slashes `//like this` it bothers me. What sort of psychopath doesn't stylise their comments `// like this`?
+
+God forbid I stumble across someone committing a string literal that uses a curly quote like this `’` (Unicode U+2019) instead of a perfectly good straight quote `'`.
+
+You may imagine that endlessly requesting changes for such tedious trivialities on the pull requests of my colleagues would not be winning me any friends, and you would be right. Thankfully though, modern tools are effective enough that most of the time I don't have to.
+
 - [Automating our nitpicking](#automating-our-nitpicking)
 - [EditorConfig](#editorconfig)
 - [Prettier](#prettier)
@@ -40,18 +52,6 @@ authors: ["default"]
         - [GitHub workflow](#github-workflow)
         - [GitHub repository settings](#github-repository-settings)
 - [Why we should all be nitpickers](#why-we-should-all-be-nitpickers)
-
-If there was a Nitpickers Anonymous support group, I'd be member number one.
-
-Poorly named variables, typos, line breaks missing (or in places they shouldn't be), exports that are never imported, ternary statements nested within ternary statements, functions with too many arguments - these are the things that keep me up at night.
-
-In case you're thinking "that doesn't seem so bad, those things would bother me too", then I can assure you that for me it goes to a much more pathological level.
-
-If I see someone start a single line comment without a space after the slashes `//like this` it bothers me. What sort of psychopath doesn't stylise their comments `// like this`?
-
-God forbid I stumble across someone committing a string literal that uses a curly quote like this `’` (Unicode U+2019) instead of a perfectly good straight quote `'`.
-
-You may imagine that endlessly requesting changes for such tedious trivialities on the pull requests of my colleagues would not be winning me any friends, and you would be right. Thankfully though, modern tools are effective enough that most of the time I don't have to.
 
 # Automating our nitpicking
 
