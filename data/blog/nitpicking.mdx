@@ -29,17 +29,17 @@ authors: ["default"]
         - [eslint-plugin-react, eslint-plugin-react-hooks and eslint-plugin-react-refresh](#eslint-plugin-react-eslint-plugin-react-hooks-and-eslint-plugin-react-refresh)
         - [eslint-plugin-spellcheck and eslint-plugin-react-prefer-function-component](#eslint-plugin-spellcheck-and-eslint-plugin-react-prefer-function-component)
     - [Customising rules beyond recommended configurations](#customising-rules-beyond-recommended-configurations)
+- [Knip](#knip)
 - [tsconfig](#tsconfig)
-    - [Knip](#knip)
-    - [How do we enforce all of this?](#how-do-we-enforce-all-of-this)
-        - [Recommended IDE extensions](#recommended-ide-extensions)
-            - [.vscode/extensions.json](#vscodeextensionsjson)
-            - [.vscode/settings.json](#vscodesettingsjson)
-        - [Pre-commit hooks](#pre-commit-hooks)
-        - [Build pipeline](#build-pipeline)
-            - [GitHub workflow](#github-workflow)
-            - [GitHub repository settings](#github-repository-settings)
-    - [Why we should all be nitpickers](#why-we-should-all-be-nitpickers)
+- [How do we enforce all of this?](#how-do-we-enforce-all-of-this)
+    - [Recommended IDE extensions](#recommended-ide-extensions)
+        - [.vscode/extensions.json](#vscodeextensionsjson)
+        - [.vscode/settings.json](#vscodesettingsjson)
+    - [Pre-commit hooks](#pre-commit-hooks)
+    - [Build pipeline](#build-pipeline)
+        - [GitHub workflow](#github-workflow)
+        - [GitHub repository settings](#github-repository-settings)
+- [Why we should all be nitpickers](#why-we-should-all-be-nitpickers)
 
 If there was a Nitpickers Anonymous support group, I'd be member number one.
 
@@ -233,6 +233,17 @@ For example, for the above configurations I personally go a bit further and cust
 "react/self-closing-comp": "error"
 ```
 
+# Knip
+
+This might be the lesser known tool out of all that I am going through, however I can't overemphasise how much I love it. While ESLint is great at helping you identify and resolve problematic patterns within files, it is not so useful for catching issues that require looking across multiple files, or even dependencies. This is where Knip comes in.
+
+The [Knip documentation](https://knip.dev/explanations/why-use-knip) has a very good overview of why to use this tool, but for me the two most important things are:
+
+1. Identification of dead code (very importantly, this includes exported code which is never imported anywhere)
+2. Identification of unused dependencies
+
+Knip will run without any config file, however depending on the structure and the sort of dependencies you have in your project, it may come up with some false flags, or fail to identify some legitimate issues, in which case we need to tinker with it a little bit.
+
 # tsconfig
 
 This doesn't fall very nicely into the category of linting and formatting, but there are a few type-checking configuration options for the TypeScript compiler that are simply too powerful not to mention, both from a code cleanliness and reduced-risk-of-bugs perspective.
@@ -259,18 +270,7 @@ A few more rules that are valuable for cleaner code are:
 - `noUnusedLocals`
 - `noUnusedParameters`
 
-## Knip
-
-This might be the lesser known tool out of all that I am going through, however I can't overemphasise how much I love it. While ESLint is great at helping you identify and resolve problematic patterns within files, it is not so useful for catching issues that require looking across multiple files, or even dependencies. This is where Knip comes in.
-
-The [Knip documentation](https://knip.dev/explanations/why-use-knip) has a very good overview of why to use this tool, but for me the two most important things are:
-
-1. Identification of dead code (very importantly, this includes exported code which is never imported anywhere)
-2. Identification of unused dependencies
-
-Knip will run without any config file, however depending on the structure and the sort of dependencies you have in your project, it may come up with some false flags, or fail to identify some legitimate issues, in which case we need to tinker with it a little bit.
-
-## How do we enforce all of this?
+# How do we enforce all of this?
 
 Having handy-dandy linting and formatting rules is all well and good, but if we are relying on simply trusting our team manually run some commands locally before committing, we're in for sore disappointment. Sometimes mistakes happen. Sometimes new starters join who don't know what scripts to run before committing. Despite our best efforts to set up all the tooling I've outlined above, we wouldn't reach the end of the day before unformatted unlinted code makes it into `master`.
 
@@ -282,12 +282,12 @@ My recommendation is a combination of all three of the following, which I will b
 2. Pre-commit hooks that run (and where possible autofix) issues prior to committing
 3. Build pipeline checks to fail our build and prevent merging our pull request to master if the above two fail
 
-### Recommended IDE extensions
+## Recommended IDE extensions
 
 This tip is unfortunately Visual Studio Code specific. While there is no guarantee everyone working on your project uses the same IDE, in 2025 VS Code continues to be ubiquitous in the industry so is worth mentioning.
 Making a `.vscode` directory in our project enables us to add a couple of useful files that encourage consistency across developers.
 
-#### .vscode/extensions.json
+### .vscode/extensions.json
 
 Here we can add a list of recommended extensions for which any developer opening your project will be prompted to install with a dialog that looks like this:
 
@@ -307,7 +307,7 @@ Essential extensions to recommend, if you've followed this article up until now,
 
 _If you want to add further extensions to `recommendations`, you can find the correct name to pass in under a value "Unique Identifier" found on the extension's marketplace page._
 
-#### .vscode/settings.json
+### .vscode/settings.json
 
 VS Code has two types of settings:
 
@@ -327,7 +327,7 @@ There are many powerful configuration options we have at our disposal here which
 }
 ```
 
-### Pre-commit hooks
+## Pre-commit hooks
 
 If the developer managed to get save files without running our formatting and linting tools on them, perhaps because they weren't using VS Code or didn't install the recommended extensions, then the next safeguard in our arsenal is pre-commit hooks. These are simply scripts that automatically run locally on our machine before we commit.
 
@@ -361,7 +361,7 @@ yarn knip
 
 Above I said _"ideally"_, as there comes a time when we need to be pragmatic about what we run as a pre-commit hook. A good rule of thumb is that your checks should take no longer than about 10 seconds. Any longer is really going to start annoying developers working on your project. `prettier` is blazing fast so is always a no brainer to run, but `knip` and `eslint` may need to be culled on larger projects.
 
-### Build pipeline
+## Build pipeline
 
 Even with recommending useful browser extensions and adding pre-commit hooks, you can be certain that some developer at some stage will manage to still bypass our linting. Maybe a junior on our team had `eslint` fail in a pre-commit hook script but the error message was confusing. They google it and find the solution is to just retry the commit with `--no-verify`. If that sneaks past code review, now we've got unlinted code into `master`.
 
@@ -369,7 +369,7 @@ This is where our final and 100% foolproof safeguard comes in - running all our 
 
 How you achieve this is going to be different based on what CI provider and git hosting platform you use, but my example will be for those using GitHub and GitHub Actions.
 
-#### GitHub workflow
+### GitHub workflow
 
 This one is simple. You just want to run all your static checks as build steps. Here is a sample workflow file you can use. I have saved this in `.github/workflows/static-checks.yml`:
 
@@ -396,7 +396,7 @@ jobs:
               run: yarn knip
 ```
 
-#### GitHub repository settings
+### GitHub repository settings
 
 Next we want to apply some settings to our repository that ensure that only code that passes our `Static Checks` build can find its way into `master`.
 
@@ -414,7 +414,7 @@ Now that we have made it so that no one can commit directly to `master` without 
 
 ![Pull request with unsuccessful checks](/static/images/nitpicking/github_checks_not_successful_ui.webp)
 
-## Why we should all be nitpickers
+# Why we should all be nitpickers
 
 Granted, making the case in defense of spending our valuable time and energy worrying about the unimportant stylistic aspects of code is hard to do.
 
