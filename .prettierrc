@@ -2,5 +2,6 @@
 	"semi": false,
 	"trailingComma": "none",
 	"quoteProps": "consistent",
+	"printWidth": 80,
 	"plugins": ["prettier-plugin-tailwindcss"]
 }
