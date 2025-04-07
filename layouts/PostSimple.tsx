@@ -16,7 +16,12 @@ interface LayoutProps {
 	prev?: { path: string; title: string }
 }
 
-export default function PostLayout({ content, next, prev, children }: LayoutProps) {
+export default function PostLayout({
+	content,
+	next,
+	prev,
+	children
+}: LayoutProps) {
 	const { slug, date, title } = content
 
 	return (
@@ -30,7 +35,12 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
 								<div>
 									<dt className="sr-only">Published on</dt>
 									<dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
-										<time dateTime={date}>{formatDate(date, siteMetadata.locale)}</time>
+										<time dateTime={date}>
+											{formatDate(
+												date,
+												siteMetadata.locale
+											)}
+										</time>
 									</dd>
 								</div>
 							</dl>
@@ -41,10 +51,15 @@ export default function PostLayout({ content, next, prev, children }: LayoutProp
 					</header>
 					<div className="grid-rows-[auto_1fr] divide-y divide-gray-200 pb-8 xl:divide-y-0 dark:divide-gray-700">
 						<div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
-							<div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
+							<div className="prose dark:prose-invert max-w-none pt-10 pb-8">
+								{children}
+							</div>
 						</div>
 						{siteMetadata.comments && (
-							<div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
+							<div
+								className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300"
+								id="comment"
+							>
 								<Comments slug={slug} />
 							</div>
 						)}

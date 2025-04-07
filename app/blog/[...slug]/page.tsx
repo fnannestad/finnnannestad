@@ -2,7 +2,11 @@ import "css/prism.css"
 
 import { components } from "@/components/MDXComponents"
 import { MDXLayoutRenderer } from "pliny/mdx-components"
-import { sortPosts, coreContent, allCoreContent } from "pliny/utils/contentlayer"
+import {
+	sortPosts,
+	coreContent,
+	allCoreContent
+} from "pliny/utils/contentlayer"
 import { allBlogs, allAuthors } from "contentlayer/generated"
 import PostSimple from "@/layouts/PostSimple"
 import PostLayout from "@/layouts/PostLayout"
@@ -18,7 +22,9 @@ const layouts = {
 	PostBanner
 }
 
-export async function generateMetadata(props: { params: Promise<{ slug: string[] }> }): Promise<Metadata | undefined> {
+export async function generateMetadata(props: {
+	params: Promise<{ slug: string[] }>
+}): Promise<Metadata | undefined> {
 	const params = await props.params
 	const slug = decodeURI(params.slug.join("/"))
 	const post = allBlogs.find((p) => p.slug === slug)
@@ -36,7 +42,8 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 	const authors = authorDetails.map((author) => author.name)
 	let imageList = [siteMetadata.socialBanner]
 	if (post.images) {
-		imageList = typeof post.images === "string" ? [post.images] : post.images
+		imageList =
+			typeof post.images === "string" ? [post.images] : post.images
 	}
 	const ogImages = imageList.map((img) => {
 		return {
@@ -69,10 +76,14 @@ export async function generateMetadata(props: { params: Promise<{ slug: string[]
 }
 
 export const generateStaticParams = () => {
-	return allBlogs.map((p) => ({ slug: p.slug.split("/").map((name) => decodeURI(name)) }))
+	return allBlogs.map((p) => ({
+		slug: p.slug.split("/").map((name) => decodeURI(name))
+	}))
 }
 
-export default async function Page(props: { params: Promise<{ slug: string[] }> }) {
+export default async function Page(props: {
+	params: Promise<{ slug: string[] }>
+}) {
 	const params = await props.params
 	const slug = decodeURI(params.slug.join("/"))
 	// Filter out drafts in production
@@ -103,9 +114,21 @@ export default async function Page(props: { params: Promise<{ slug: string[] }> 
 
 	return (
 		<>
-			<script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
-			<Layout content={mainContent} authorDetails={authorDetails} next={next} prev={prev}>
-				<MDXLayoutRenderer code={post.body.code} components={components} toc={post.toc} />
+			<script
+				type="application/ld+json"
+				dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+			/>
+			<Layout
+				content={mainContent}
+				authorDetails={authorDetails}
+				next={next}
+				prev={prev}
+			>
+				<MDXLayoutRenderer
+					code={post.body.code}
+					components={components}
+					toc={post.toc}
+				/>
 			</Layout>
 		</>
 	)

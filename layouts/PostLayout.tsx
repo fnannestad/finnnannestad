@@ -10,7 +10,8 @@ import Tag from "@/components/Tag"
 import siteMetadata from "@/data/siteMetadata"
 import ScrollTopAndComment from "@/components/ScrollTopAndComment"
 
-const editUrl = (path: string) => `${siteMetadata.siteRepo}/blob/main/data/${path}`
+const editUrl = (path: string) =>
+	`${siteMetadata.siteRepo}/blob/main/data/${path}`
 
 const postDateTemplate: Intl.DateTimeFormatOptions = {
 	weekday: "long",
@@ -27,7 +28,13 @@ interface LayoutProps {
 	children: ReactNode
 }
 
-export default function PostLayout({ content, authorDetails, next, prev, children }: LayoutProps) {
+export default function PostLayout({
+	content,
+	authorDetails,
+	next,
+	prev,
+	children
+}: LayoutProps) {
 	const { filePath, path, slug, date, title, tags } = content
 	const basePath = path.split("/")[0]
 
@@ -43,7 +50,10 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 									<dt className="sr-only">Published on</dt>
 									<dd className="text-base leading-6 font-medium text-gray-500 dark:text-gray-400">
 										<time dateTime={date}>
-											{new Date(date).toLocaleDateString(siteMetadata.locale, postDateTemplate)}
+											{new Date(date).toLocaleDateString(
+												siteMetadata.locale,
+												postDateTemplate
+											)}
 										</time>
 									</dd>
 								</div>
@@ -59,7 +69,10 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 							<dd>
 								<ul className="flex flex-wrap justify-center gap-4 sm:space-x-12 xl:block xl:space-y-8 xl:space-x-0">
 									{authorDetails.map((author) => (
-										<li className="flex items-center space-x-2" key={author.name}>
+										<li
+											className="flex items-center space-x-2"
+											key={author.name}
+										>
 											{author.avatar && (
 												<Image
 													src={author.avatar}
@@ -70,18 +83,32 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 												/>
 											)}
 											<dl className="text-sm leading-5 font-medium whitespace-nowrap">
-												<dt className="sr-only">Name</dt>
-												<dd className="text-gray-900 dark:text-gray-100">{author.name}</dd>
-												<dt className="sr-only">Twitter</dt>
+												<dt className="sr-only">
+													Name
+												</dt>
+												<dd className="text-gray-900 dark:text-gray-100">
+													{author.name}
+												</dd>
+												<dt className="sr-only">
+													Twitter
+												</dt>
 												<dd>
 													{author.twitter && (
 														<Link
-															href={author.twitter}
+															href={
+																author.twitter
+															}
 															className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400"
 														>
 															{author.twitter
-																.replace("https://twitter.com/", "@")
-																.replace("https://x.com/", "@")}
+																.replace(
+																	"https://twitter.com/",
+																	"@"
+																)
+																.replace(
+																	"https://x.com/",
+																	"@"
+																)}
 														</Link>
 													)}
 												</dd>
@@ -92,12 +119,19 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 							</dd>
 						</dl>
 						<div className="divide-y divide-gray-200 xl:col-span-3 xl:row-span-2 xl:pb-0 dark:divide-gray-700">
-							<div className="prose dark:prose-invert max-w-none pt-10 pb-8">{children}</div>
+							<div className="prose dark:prose-invert max-w-none pt-10 pb-8">
+								{children}
+							</div>
 							<div className="pt-6 pb-6 text-sm text-gray-700 dark:text-gray-300">
-								<Link href={editUrl(filePath)}>View on GitHub</Link>
+								<Link href={editUrl(filePath)}>
+									View on GitHub
+								</Link>
 							</div>
 							{siteMetadata.comments && (
-								<div className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300" id="comment">
+								<div
+									className="pt-6 pb-6 text-center text-gray-700 dark:text-gray-300"
+									id="comment"
+								>
 									<Comments slug={slug} />
 								</div>
 							)}
@@ -122,7 +156,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 													Previous Article
 												</h2>
 												<div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-													<Link href={`/${prev.path}`}>{prev.title}</Link>
+													<Link
+														href={`/${prev.path}`}
+													>
+														{prev.title}
+													</Link>
 												</div>
 											</div>
 										)}
@@ -132,7 +170,11 @@ export default function PostLayout({ content, authorDetails, next, prev, childre
 													Next Article
 												</h2>
 												<div className="text-primary-500 hover:text-primary-600 dark:hover:text-primary-400">
-													<Link href={`/${next.path}`}>{next.title}</Link>
+													<Link
+														href={`/${next.path}`}
+													>
+														{next.title}
+													</Link>
 												</div>
 											</div>
 										)}

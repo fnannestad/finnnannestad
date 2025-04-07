@@ -4,7 +4,10 @@ import siteMetadata from "@/data/siteMetadata"
 
 const SearchButton = () => {
 	if (siteMetadata.search) {
-		const SearchButtonWrapper = siteMetadata.search.provider === "algolia" ? AlgoliaButton : KBarButton
+		const SearchButtonWrapper =
+			siteMetadata.search.provider === "algolia"
+				? AlgoliaButton
+				: KBarButton
 
 		return (
 			<SearchButtonWrapper aria-label="Search">

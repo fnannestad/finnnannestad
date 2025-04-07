@@ -4,7 +4,10 @@ import { slug } from "github-slugger"
 import tagData from "app/tag-data.json"
 import { genPageMetadata } from "app/seo"
 
-export const metadata = genPageMetadata({ title: "Tags", description: "Things I blog about" })
+export const metadata = genPageMetadata({
+	title: "Tags",
+	description: "Things I blog about"
+})
 
 export default function Page() {
 	const tagCounts = tagData as Record<string, number>

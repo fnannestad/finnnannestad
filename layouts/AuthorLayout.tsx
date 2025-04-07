@@ -9,8 +9,19 @@ interface Props {
 }
 
 export default function AuthorLayout({ children, content }: Props) {
-	const { name, avatar, occupation, company, email, twitter, bluesky, linkedin, github } = content
-	const shouldShowSocialIconsSection = email ?? github ?? linkedin ?? twitter ?? bluesky
+	const {
+		name,
+		avatar,
+		occupation,
+		company,
+		email,
+		twitter,
+		bluesky,
+		linkedin,
+		github
+	} = content
+	const shouldShowSocialIconsSection =
+		email ?? github ?? linkedin ?? twitter ?? bluesky
 
 	return (
 		<div className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -19,17 +30,34 @@ export default function AuthorLayout({ children, content }: Props) {
 					About
 				</h1>
 			</div>
-			<div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:gap-x-8 xl:space-y-0">
+			<div className="items-start space-y-2 xl:grid xl:grid-cols-3 xl:space-y-0 xl:gap-x-8">
 				<div className="flex flex-col items-center space-x-2 pt-8">
 					{avatar && (
-						<Image src={avatar} alt="avatar" width={192} height={192} className="h-48 w-48 rounded-full" />
+						<Image
+							src={avatar}
+							alt="avatar"
+							width={192}
+							height={192}
+							className="h-48 w-48 rounded-full"
+						/>
 					)}
-					<h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">{name}</h3>
-					<div className="text-gray-500 dark:text-gray-400">{occupation}</div>
-					<div className="text-gray-500 dark:text-gray-400">{company}</div>
+					<h3 className="pt-4 pb-2 text-2xl leading-8 font-bold tracking-tight">
+						{name}
+					</h3>
+					<div className="text-gray-500 dark:text-gray-400">
+						{occupation}
+					</div>
+					<div className="text-gray-500 dark:text-gray-400">
+						{company}
+					</div>
 					{shouldShowSocialIconsSection && (
 						<div className="flex space-x-3 pt-6">
-							{email && <SocialIcon kind="mail" href={`mailto:${email}`} />}
+							{email && (
+								<SocialIcon
+									kind="mail"
+									href={`mailto:${email}`}
+								/>
+							)}
 							<SocialIcon kind="github" href={github} />
 							<SocialIcon kind="linkedin" href={linkedin} />
 							<SocialIcon kind="x" href={twitter} />
@@ -37,7 +65,9 @@ export default function AuthorLayout({ children, content }: Props) {
 						</div>
 					)}
 				</div>
-				<div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">{children}</div>
+				<div className="prose dark:prose-invert max-w-none pt-8 pb-8 xl:col-span-2">
+					{children}
+				</div>
 			</div>
 		</div>
 	)

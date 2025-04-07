@@ -19,13 +19,19 @@ export const generateStaticParams = () => {
 	})
 }
 
-export default async function TagPage(props: { params: Promise<{ tag: string; page: string }> }) {
+export default async function TagPage(props: {
+	params: Promise<{ tag: string; page: string }>
+}) {
 	const params = await props.params
 	const tag = decodeURI(params.tag)
 	const title = tag[0].toUpperCase() + tag.split(" ").join("-").slice(1)
 	const pageNumber = parseInt(params.page)
 	const filteredPosts = allCoreContent(
-		sortPosts(allBlogs.filter((post) => post.tags.map((t) => slug(t)).includes(tag)))
+		sortPosts(
+			allBlogs.filter((post) =>
+				post.tags.map((t) => slug(t)).includes(tag)
+			)
+		)
 	)
 	const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE)
 
@@ -33,7 +39,10 @@ export default async function TagPage(props: { params: Promise<{ tag: string; pa
 	if (pageNumber <= 0 || pageNumber > totalPages || isNaN(pageNumber)) {
 		return notFound()
 	}
-	const initialDisplayPosts = filteredPosts.slice(POSTS_PER_PAGE * (pageNumber - 1), POSTS_PER_PAGE * pageNumber)
+	const initialDisplayPosts = filteredPosts.slice(
+		POSTS_PER_PAGE * (pageNumber - 1),
+		POSTS_PER_PAGE * pageNumber
+	)
 	const pagination = {
 		currentPage: pageNumber,
 		totalPages: totalPages
