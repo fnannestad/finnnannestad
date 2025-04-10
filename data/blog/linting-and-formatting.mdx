@@ -1,7 +1,7 @@
 ---
 title: "Linting and Formatting TypeScript in 2025 - A Complete Guide"
-date: "2025-04-08"
-lastmod: "2025-04-08"
+date: "2025-04-10"
+lastmod: "2025-04-10"
 tags:
     [
         "editorconfig",
@@ -13,18 +13,18 @@ tags:
         "typescript",
         "programming"
     ]
-draft: true
+draft: false
 summary: "How to use tools to automate writing clean, safe and consistent code, how to enforce their usage and why you should do it."
 authors: ["default"]
 ---
 
-_All tools and configurations described in this article are shown in this [demo repository](https://github.com/fnannestad/formatting-linting-demo)._
+_All tools and configurations described in this article are implemented in this [demo repository](https://github.com/fnannestad/formatting-linting-demo)._
 
 ---
 
 If there was a Nitpickers Anonymous support group, I'd be member number one.
 
-Poorly named variables, line breaks in the wrong place, typos, exports that are never imported, ternary statements nested within ternary statements, functions with too many arguments - these are the things that keep me up at night.
+Poorly named variables, line breaks in the wrong place, typos, exported constants that are never imported, ternary statements nested within ternary statements, functions with too many arguments - these are the things that keep me up at night.
 
 In case you're thinking "that doesn't seem so bad, those things would bother me too", then I can assure you that for me it goes to a much more pathological level.
 
@@ -32,7 +32,7 @@ If I see a single line comment without a space after the double slash `//like th
 
 God forbid I stumble across someone using a string literal that contains a curly quote like this `’` (Unicode U+2019) instead of a perfectly good straight quote `'`.
 
-You may imagine that endlessly requesting changes for such tedious trivialities on the pull requests of my colleagues would not be winning me any friends, and you would be right. Thankfully though, modern tools are effective enough that most of the time I don't have to.
+You may imagine that endlessly requesting changes for such tedious trivialities on the pull requests of my colleagues would not be winning me any friends, and you would be right. Thankfully though, modern tooling is effective enough that most of the time I don't have to.
 
 ---
 
@@ -66,6 +66,7 @@ _Please note that apart from the section on tsconfig, and a few of the ESLint pl
         - [eslint-plugin-react, eslint-plugin-react-hooks and eslint-plugin-react-refresh](#eslint-plugin-react-eslint-plugin-react-hooks-and-eslint-plugin-react-refresh)
         - [eslint-plugin-spellcheck and eslint-plugin-react-prefer-function-component](#eslint-plugin-spellcheck-and-eslint-plugin-react-prefer-function-component)
     - [Customising rules beyond recommended configurations](#customising-rules-beyond-recommended-configurations)
+        - ["warn" or "error"?](#warn-or-error)
 - [Knip](#knip)
 - [tsconfig](#tsconfig)
 - [How do we enforce all of this?](#how-do-we-enforce-all-of-this)
@@ -117,7 +118,7 @@ Note that Prettier automatically adopts the values specified in an `.editorconfi
 
 # Prettier
 
-It might be reasonable to ask, _"Why in a world where ESLint has become so powerful, is there even a need for formatting tools like Prettier anymore?"_
+It might be reasonable to ask, _"Why, in a world where ESLint has become so powerful, is there even a need for formatting tools like Prettier anymore?"_
 
 Unfortunately for those of us hoping to slim down our number of dev-dependencies by one, ESLint is very much not intended to be used for formatting, to the point where the team has [deprecated all formatting rules](https://eslint.org/blog/2023/10/deprecating-formatting-rules) and recommends using a dedicated code-formatter instead.
 
@@ -148,17 +149,19 @@ If you want to avoid running prettier against specific files or paths, you can a
 
 # ESLint
 
+_ESLint configuration is verbose, so I won't provide complete examples in this section. For exact syntax, check out the [ESLint config in the demo repository](https://github.com/fnannestad/formatting-linting-demo/blob/main/eslint.config.ts) which contains all configuration talked through here. Note that I have used TypeScript, which requires adding `jiti` to dev-dependencies._
+
 [ESLint](https://eslint.org/) is the most powerful static analysis tool we have at our disposal for JavaScript and TypeScript code, thanks a lot to its massive suite of native and third-party rules and plugins.
 
-Due to the breadth of these rules it can also be a overwhelming to know where to start and what rules you should be turning on. I'll aim to demystify it a little and demonstrate that we can get 99% of the benefit of ESLint with just a handful of plugins, and no complex configuration.
+Due to the breadth of these rules it can also be overwhelming to know where to start and what rules you should be turning on. I'll aim to demystify it a little and demonstrate that we can get 99% of the benefit of ESLint with just a handful of plugins, and no complex configuration.
 
 ## Concepts
 
-Unlike the other tools covered in this article ESLint is a little more complex and not practical to explain in full here, however the three main concepts to understand are:
+ESLint is flexible, but with that flexibility comes complexity. For this article, there are three main concepts to understand:
 
-1. Rules - each of these validates that your code meets a certain condition, for example, whether your function has a return type specified. Different rules have different configuration options, and generally can be set to either "warn" or "error". Code breaking the rule will get a zigzag underline in your IDE indicating which rule was broken. Some of these are autofixing by running ESLint, but some require manual intervention.
-2. Plugins - npm module that contains third party sets of rules and configurations
-3. Sharable configurations - configurations shared via npm that enable rules build into ESLint or plugins
+1. Rules - each of these validates that your code meets a certain condition, for example, [whether your function has a return type specified](https://typescript-eslint.io/rules/explicit-function-return-type/). Different rules have different configuration options, and generally can be set to either "warn" or "error". Code breaking the rule will get a zigzaggy underline in your IDE. Some of these are autofixable by running ESLint, but others require manual intervention.
+2. Plugins - npm modules that contain third party sets of rules and configurations
+3. Shareable configurations - configurations shared via npm that enable sets of rules built into core ESLint or plugins that you are using
 
 If you're completely new to it, I recommend checking out [the ESLint page on core concepts](https://eslint.org/docs/latest/use/core-concepts/), then returning to this article.
 
@@ -187,11 +190,9 @@ yarn add --dev typescript-eslint \
 	eslint-plugin-react-prefer-function-component
 ```
 
-_As ESLint configuration is quite wordy, I won't provide complete examples here. If you are after exact syntax, check out the [ESLint config in the aforementioned demo repository](https://github.com/fnannestad/formatting-linting-demo/blob/main/eslint.config.ts) which contains all configuration talked through here. Please note that here I have used TypeScript for my config file. If you wish to do the same, you need to also add `jiti` to your dev-dependencies._
-
 ## Recommended configuration
 
-Both core ESLint and most plugins you will use have a large number of rules and it can be quite overwhelming to decide which are enabled. Thankfully, most of the time they also come with a sharable configurations which are often "recommended" set of rules. These are rules that are desirable for the vast majority of projects, and can be turned on without needing to specify each rule individually.
+Both core ESLint and most plugins have a large number of rules and it can be quite overwhelming to decide which to enable. Thankfully, most of the time they also come with shareable configurations which are often "recommended" sets of rules. These are rules that are desirable for the vast majority of projects, and can be turned on without needing to specify each rule individually.
 
 _N.B. If you're already using a framework that has an ESLint configuration generated by default, it is possible you are using some of these without realising. For example, if you create a NextJS project with ESLint, it will automatically add [eslint-config-next](https://nextjs.org/docs/app/api-reference/config/eslint#reference), which includes `eslint-plugin-react` and `eslint-plugin-react-hooks` by default. Do your research to avoid duplication._
 
@@ -199,7 +200,7 @@ _N.B. If you're already using a framework that has an ESLint configuration gener
 
 `typescript-eslint` is the primary library we will be using to lint our TypeScript code and I recommend applying multiple configurations:
 
-1. [eslint-recommended](https://typescript-eslint.io/users/configs/#eslint-recommended) - This is the full set of regular core ESLint recommended rules, with just a few disabled that are handled automatically by TypeScript. These are rules that basically always identify bad practices or bugs.
+1. [eslint-recommended](https://typescript-eslint.io/users/configs/#eslint-recommended) - This is the full set of regular core ESLint recommended rules with a few disabled that are handled automatically by TypeScript. These are rules that basically always identify bad practices or bugs.
 2. [strict-type-checked](https://typescript-eslint.io/users/configs/#strict-type-checked) - Includes all `recommended` and `strict` rules from TypeScript ESLint, along with additional ones requiring TypeScript type checking information.
 3. [stylistic-type-checked](https://typescript-eslint.io/users/configs/#stylistic-type-checked) - Applies rules considered best practise for TypeScript projects that don't impact logic. Generally just enforcing cleaner code.
 
@@ -209,9 +210,7 @@ If your codebase falls into this category, `strict-type-checked` can be swapped 
 
 ### @stylistic/eslint-plugin
 
-I mentioned in [the section on Prettier](#prettier) that we shouldn't use ESLint for formatting, however I partially lied. [ESLint Stylistic](https://eslint.style/) has replaced the now-deprecated formatting ESLint rules and I strongly recommend using its recommended configuration. Prettier is great for our fundamental formatting, however doesn't go remotely as deep as ESLint can. Stylistic's [many rules](https://eslint.style/packages/default#rules) will make your code sexy.
-
-Add the plugin and apply the `recommended` configuration.
+I mentioned in [the section on Prettier](#prettier) that we shouldn't use ESLint for formatting, however I partially lied. [ESLint Stylistic](https://eslint.style/) has replaced the now-deprecated formatting ESLint rules and I strongly recommend using its `recommended` configuration. Prettier is great for our fundamental formatting, however doesn't go remotely as deep as ESLint can. Stylistic's [many rules](https://eslint.style/packages/default#rules) will make your code sexy.
 
 ### eslint-config-prettier
 
@@ -227,7 +226,7 @@ Each of these have `recommended` configurations that should be applied.
 
 ### eslint-plugin-spellcheck and eslint-plugin-react-prefer-function-component
 
-These are some very specific oddballs which are not mandatory, but are personally ones I would include in any project and demonstrate just how broad the ESLint ecosystem is. In fact, in the introduction of this blog I mentioned my distaste for Unicode U+2019 quotes - there is even [an ESLint plugin for that](https://github.com/seleb/eslint-plugin-no-smart-quotes)!
+These are some very specific oddballs which are not mandatory, but are personally ones I would include in any project. They demonstrate just how broad the ESLint ecosystem is. In fact, in the introduction of this blog I mentioned my distaste for Unicode U+2019 quotes - there is even [an ESLint plugin for that](https://github.com/seleb/eslint-plugin-no-smart-quotes)!
 
 ## Customising rules beyond recommended configurations
 
@@ -258,6 +257,18 @@ For example, for the above configurations I personally go a bit further and cust
 "react/self-closing-comp": "error"
 ```
 
+If there is a rule you don't like, you can usually disable it by setting the value to `"off"`, for example:
+
+```typescript
+"@typescript-eslint/no-unsafe-assignment": "off",
+```
+
+In rare scenarios where a rule doesn't exist it is even possible to write [custom rules](https://eslint.org/docs/latest/extend/custom-rules).
+
+### "warn" or "error"?
+
+I strongly recommend to add every rule with `"error"` severity so that when they are broken ESLint will end with exit code 1, which can be used to fail builds in your CI pipeline (more on this below). `"warn"` rules are guaranteed to be ignored by some team member eventually. The only case I would ever use `"warn"` is if I am turning on a rule for a codebase that violates it a lot already, and the effort to remediate all instances would be impractical.
+
 # Knip
 
 Probably the least known tool out of all that I am covering, however I can't overemphasise how much I love it. While ESLint is great at helping you identify and resolve problematic patterns within files, it is not so useful for catching issues that require looking across multiple files, or even dependencies. This is where [Knip](https://knip.dev/) comes in.
@@ -281,7 +292,7 @@ We can do this by adding an `.knip.jsonc` file at the top level of our repositor
 
 # tsconfig
 
-This doesn't fall perfectly into the category of linting and formatting, but there are a few type-checking configuration options for the TypeScript compiler that are simply too powerful not to mention, both from a code cleanliness and reduced-risk-of-bugs perspective.
+This doesn't fall perfectly into the category of "linting and formatting tools", but there are a few type-checking configuration options for the TypeScript compiler that are simply too powerful not to mention, both from a code-cleanliness and reduced-risk-of-bugs perspective.
 
 The easiest way to get your configuration into shipshape is to go and add everything marked as "Recommended" in [TypeScript's documentation](https://www.typescriptlang.org/tsconfig/). There are a few, however, worth drawing extra attention to.
 
@@ -297,7 +308,7 @@ The absolute number one setting that you should turn on is `strict: true`, which
 - `noImplicitThis`
 - `useUnknownInCatchVariables`
 
-Special emphasis on `strictNullChecks`. If you don't like seeing crashes with a message `Uncaught TypeError: Cannot read properties of undefined`, this is the option for you.
+Special emphasis on `strictNullChecks`. If you don't like seeing crashes with the message `Uncaught TypeError: Cannot read properties of undefined`, this is the option for you.
 
 A few more rules that are valuable for cleaner code are:
 
@@ -317,7 +328,7 @@ Sometimes new starters join who don't know what scripts to run before committing
 
 Despite our best efforts to set up all the tooling I've outlined above, we wouldn't reach the end of the day before unformatted and unlinted code makes its way into `master`.
 
-Thankfully, there are a few strategies we can use to automate execution of our tooling for developers to make their lives easier and to prevent their code from reaching `master` if it makes it that far.
+Thankfully, there are a few strategies we can use to automate execution of our tooling for developers to make their lives easier and to prevent unchecked code from reaching `master`.
 
 My recommendation is a combination of all three of the following, which I will break down one at a time:
 
@@ -400,7 +411,7 @@ Now we want to define what `lint-staged` is actually going to run by adding a ne
 }
 ```
 
-We then want to update `.husky/pre-commit` to actually run `lint-staged`. This is also a time where we could run `knip`:
+We then want to update `.husky/pre-commit` (created by `yarn husky init`) to actually run `lint-staged`. This is also a time where we could run `knip`:
 
 ```shell
 yarn lint-staged
@@ -463,9 +474,9 @@ Next we want to apply some settings to our repository that ensure that only code
 Now that we have made it so that:
 
 1. No one can commit directly to `master` without a pull request
-2. Our new status check is required to pass to merge a pull request
+2. Our new status check must pass to merge a pull request
 
-The next time someone raises a pull request that doesn't pass our checks, they will see a UI that looks like this:
+The next time someone raises a pull request that doesn't pass our checks, they will see a UI that looks like this ([sample in demo repository](https://github.com/fnannestad/formatting-linting-demo/pull/4)):
 
 ![Pull request with unsuccessful checks](/static/images/nitpicking/github_checks_not_successful_ui.webp)
 
@@ -473,17 +484,17 @@ The next time someone raises a pull request that doesn't pass our checks, they w
 
 Voila! That's it!
 
-While unfortunately there isn't yet a complete antidote to the spectre of "bad code", we've now applied tooling and settings that will help (and force) our team to write code as readable, consistent and bug free as possible.
+While unfortunately there isn't yet a complete antidote to the spectre of "bad code", we've now applied tooling and settings that will help (and force when necessary) our team to write code as readable, consistent and bug free as possible.
 
 ---
 
 # Footnote - Was this even worth it?
 
-Me rattling off what you might find elsewhere online would result in saying that automated linting and formatting:
+Rattling off what you might find elsewhere online would result in me saying that automated linting and formatting:
 
 1. Reduces the risk of bugs
 2. Improves the readability of our code
-3. Aids onboarding new-starters (who no longer need to read a lengthy style guide and just let the tooling do it for them)
+3. Aids onboarding new-starters (who no longer need to read a lengthy style guide and can just let the tooling figure it out for them)
 
 Obvious though they are, each of these alone is reason enough to spend 30 minutes setting up some of the tooling I've talked about in this article.
 
@@ -505,7 +516,7 @@ Anyone working as a software developer should recognise what I'm describing here
 
 A development team I worked with once spent a good half a day heatedly debating whether to style our [React fragments](https://react.dev/reference/react/Fragment) like `<React.Fragment>` or with the shorthand `<>` (thankfully cool heads prevailed and `<>` reigned supreme and was codified with [an ESLint rule](https://github.com/jsx-eslint/eslint-plugin-react/blob/master/docs/rules/jsx-fragments.md#syntax-mode)).
 
-These discussions can be mighty fun once in a while, but they aren't fun if they happen every week. Once we've come to a conclusion on one of these age-old debates, we should set it in stone by enforcing it with a lint rule so that we never have to discuss it again.
+These discussions can be mighty fun once in a while, but they aren't fun if they are repeated daily. Once we've come to a conclusion on one of these age-old debates, we should set it in stone by enforcing it with a lint rule so that we never have to discuss it again.
 
 ## Not making your colleagues hate you
 

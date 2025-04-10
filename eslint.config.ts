@@ -62,9 +62,15 @@ export default tseslint.config(
 			"default-param-last": "error",
 			"eqeqeq": "error",
 			"prefer-template": "error",
-			"react/jsx-curly-brace-presence": ["error", { props: "never", children: "never" }],
+			"react/jsx-curly-brace-presence": [
+				"error",
+				{ props: "never", children: "never" }
+			],
 			"react/jsx-fragments": ["error", "syntax"],
-			"react/jsx-no-useless-fragment": ["error", { allowExpressions: true }],
+			"react/jsx-no-useless-fragment": [
+				"error",
+				{ allowExpressions: true }
+			],
 			"react/jsx-newline": ["error", { prevent: true }],
 			"react/self-closing-comp": "error",
 			"@typescript-eslint/no-unused-vars": [
@@ -87,9 +93,9 @@ export default tseslint.config(
 				}
 			],
 			// contentlayer's typing makes it hard to use these rules
-			"@typescript-eslint/no-unsafe-assignment": "off",
-			"@typescript-eslint/no-unsafe-member-access": "off",
-			"@typescript-eslint/no-non-null-assertion": "off"
+			"@typescript-eslint/no-unsafe-assignment": "warn",
+			"@typescript-eslint/no-unsafe-member-access": "warn",
+			"@typescript-eslint/no-non-null-assertion": "warn"
 		}
 	}
 )
