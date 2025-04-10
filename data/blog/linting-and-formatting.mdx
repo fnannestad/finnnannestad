@@ -57,8 +57,9 @@ _Please note that apart from the section on tsconfig, and a few of the ESLint pl
 - [EditorConfig](#editorconfig)
 - [Prettier](#prettier)
 - [ESLint](#eslint)
+    - [Concepts](#concepts)
     - [Setup](#setup)
-    - [Recommended configurations](#recommended-configurations)
+    - [Recommended configuration](#recommended-configuration)
         - [typescript-eslint](#typescript-eslint)
         - [@stylistic/eslint-plugin](#stylisticeslint-plugin)
         - [eslint-config-prettier](#eslint-config-prettier)
@@ -147,27 +148,31 @@ If you want to avoid running prettier against specific files or paths, you can a
 
 # ESLint
 
-And now we're on to the big-daddy. [ESLint](https://eslint.org/) is the most powerful static analysis tool we have at our disposal for JavaScript and TypeScript code, thanks a lot to its massive suite of native and third-party rules and plugins.
+[ESLint](https://eslint.org/) is the most powerful static analysis tool we have at our disposal for JavaScript and TypeScript code, thanks a lot to its massive suite of native and third-party rules and plugins.
 
-Due to the extent of these rules, it can also be a bit overwhelming to know where to start and know what rules you should be turning on. I'll aim to demystify it a little and demonstrate that we can get 99% of the benefit of ESLint with just a handful of plugins, and no complex configuration.
+Due to the breadth of these rules it can also be a overwhelming to know where to start and what rules you should be turning on. I'll aim to demystify it a little and demonstrate that we can get 99% of the benefit of ESLint with just a handful of plugins, and no complex configuration.
 
-Install ESLint with this command:
+## Concepts
+
+Unlike the other tools covered in this article ESLint is a little more complex and not practical to explain in full here, however the three main concepts to understand are:
+
+1. Rules - each of these validates that your code meets a certain condition, for example, whether your function has a return type specified. Different rules have different configuration options, and generally can be set to either "warn" or "error". Code breaking the rule will get a zigzag underline in your IDE indicating which rule was broken. Some of these are autofixing by running ESLint, but some require manual intervention.
+2. Plugins - npm module that contains third party sets of rules and configurations
+3. Sharable configurations - configurations shared via npm that enable rules build into ESLint or plugins
+
+If you're completely new to it, I recommend checking out [the ESLint page on core concepts](https://eslint.org/docs/latest/use/core-concepts/), then returning to this article.
+
+_N.B. In 2022 ESLint [introduced a new configuration format](https://eslint.org/blog/2022/08/new-config-system-part-2/) called "Flat Config". They say it is intended to be "much simpler than the original config system". I'm not sure I agree, however it is a little more flexible and not so bad once we've wrapped our head around it._
+
+## Setup
+
+First up, install ESLint:
 
 ```shell
 yarn create @eslint/config
 ```
 
 This will also create the ESLint config file `eslint.config.mjs`.
-
-_N.B. In 2022 ESLint [introduced a new configuration format](https://eslint.org/blog/2022/08/new-config-system-part-2/) called "Flat Config". They say it is intended to be "much simpler than the original config system". I'm not completely sure I agree, however it is a little more flexible and not so bad once we've wrapped our head around it._
-
-Unlike the other tools I mention in this article, ESLint is a little more complex and not practical to explain in full here. If you're completely new to it, I recommend checking out [their page on core concepts](https://eslint.org/docs/latest/use/core-concepts/), then returning to this article.
-
-I'll also not get too involved in the config file syntax, however I have put together an entire example with everything I will cover here which you can find in the [aforementioned demo repository](https://github.com/fnannestad/formatting-linting-demo/blob/main/eslint.config.ts).
-
-## Setup
-
-Unlike the other tools, I won't go through step by step here on how to set everything up, as this would fill up an entire blog post of its own, however if you are looking for a code example, please checkout the config I have put together in the [aforementioned demo repository](https://github.com/fnannestad/formatting-linting-demo/blob/main/eslint.config.ts). _Please note that here I have used TypeScript for my ESLint config. If you wish to do the same, you need to also add `jiti` to your dev-dependencies._
 
 To install all the plugins and configurations I will be talking through, you can run this command:
 
@@ -182,39 +187,43 @@ yarn add --dev typescript-eslint \
 	eslint-plugin-react-prefer-function-component
 ```
 
-## Recommended configurations
+_As ESLint configuration is quite wordy, I won't provide complete examples here. If you are after exact syntax, check out the [ESLint config in the aforementioned demo repository](https://github.com/fnannestad/formatting-linting-demo/blob/main/eslint.config.ts) which contains all configuration talked through here. Please note that here I have used TypeScript for my config file. If you wish to do the same, you need to also add `jiti` to your dev-dependencies._
 
-Both core ESLint and most plugins you will use have a large number of rules and it can be quite overwhelming to decide which are enabled. Thankfully, most of the time they also come with a "recommended" set of rules. These are rules that are desirable for the vast majority of projects, and can be turned on with a single line of configuration.
+## Recommended configuration
 
-If you're already using a framework that has an ESLint configuration generated by default, it is possible you are using some of these without realising. For example, if you create a NextJS project with ESLint, it will automatically add [eslint-config-next](https://nextjs.org/docs/app/api-reference/config/eslint#reference), which includes `eslint-plugin-react` and `eslint-plugin-react-hooks` by default.
+Both core ESLint and most plugins you will use have a large number of rules and it can be quite overwhelming to decide which are enabled. Thankfully, most of the time they also come with a sharable configurations which are often "recommended" set of rules. These are rules that are desirable for the vast majority of projects, and can be turned on without needing to specify each rule individually.
 
-So please do your research first to avoid duplication. That being said though, there are a few I recommend (pun not intended).
+_N.B. If you're already using a framework that has an ESLint configuration generated by default, it is possible you are using some of these without realising. For example, if you create a NextJS project with ESLint, it will automatically add [eslint-config-next](https://nextjs.org/docs/app/api-reference/config/eslint#reference), which includes `eslint-plugin-react` and `eslint-plugin-react-hooks` by default. Do your research to avoid duplication._
 
 ### typescript-eslint
 
-`typescript-eslint` is the primary library we will be using to lint our TypeScript code and I recommend multiple configurations
+`typescript-eslint` is the primary library we will be using to lint our TypeScript code and I recommend applying multiple configurations:
 
 1. [eslint-recommended](https://typescript-eslint.io/users/configs/#eslint-recommended) - This is the full set of regular core ESLint recommended rules, with just a few disabled that are handled automatically by TypeScript. These are rules that basically always identify bad practices or bugs.
 2. [strict-type-checked](https://typescript-eslint.io/users/configs/#strict-type-checked) - Includes all `recommended` and `strict` rules from TypeScript ESLint, along with additional ones requiring TypeScript type checking information.
 3. [stylistic-type-checked](https://typescript-eslint.io/users/configs/#stylistic-type-checked) - Applies rules considered best practise for TypeScript projects that don't impact logic. Generally just enforcing cleaner code.
 
-The last two rules have a big asterisk against them - enabling rules that require type information heavily impacts ESLint performance to the point where it may be impractical to use on large codebases. I have seen them changing execution time from 30 seconds up to almost 30 minutes.
+The last two rules have a big asterisk against them - enabling rules that require type information heavily impacts ESLint performance to the point where it may be impractical to use on large codebases. I have seen these increasing execution time 30-fold.
 
 If your codebase falls into this category, `strict-type-checked` can be swapped out for `strict`, and `stylistic-type-checked` can be swapped out for `stylistic`.
 
 ### @stylistic/eslint-plugin
 
-I mentioned in the section on Prettier that we shouldn't use ESLint for formatting, however I somewhat lied. [ESLint Stylistic](https://eslint.style/) has replaced the now-deprecated formatting ESLint rules and I strongly recommend using its recommended configuration. Prettier is great for our fundamental formatting, however doesn't go remotely as deep as ESLint can. Its [many rules](https://eslint.style/packages/default#rules) will make your code sexy. Add the plugin and apply the recommended config.
+I mentioned in [the section on Prettier](#prettier) that we shouldn't use ESLint for formatting, however I partially lied. [ESLint Stylistic](https://eslint.style/) has replaced the now-deprecated formatting ESLint rules and I strongly recommend using its recommended configuration. Prettier is great for our fundamental formatting, however doesn't go remotely as deep as ESLint can. Stylistic's [many rules](https://eslint.style/packages/default#rules) will make your code sexy.
+
+Add the plugin and apply the `recommended` configuration.
 
 ### eslint-config-prettier
 
 [This one](https://github.com/prettier/eslint-config-prettier) is simple. It turns off all ESLint rules that conflict with Prettier.
 
-_N.B. You may find references to something called `eslint-plugin-prettier`. This is [not recommended to be used by Prettier](https://prettier.io/docs/integrating-with-linters#notes)_
+_N.B. You may also find references to something called `eslint-plugin-prettier`. This is [not recommended to be used by Prettier](https://prettier.io/docs/integrating-with-linters#notes)_
 
 ### eslint-plugin-react, eslint-plugin-react-hooks and eslint-plugin-react-refresh
 
 If you're not working with React, swap these out for equivalents that doubtlessly exist for your framework of choice, however these are the most useful plugins if you are. The first two are self-explanatory. `eslint-plugin-react-refresh` will report any case where a component is structured in a way that will break fast refreshing. Use the recommended config for each of these.
+
+Each of these have `recommended` configurations that should be applied.
 
 ### eslint-plugin-spellcheck and eslint-plugin-react-prefer-function-component
 
