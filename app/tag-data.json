@@ -1,5 +1,5 @@
 {
-  "miscellaneous": 1,
+  "autobiographical": 1,
   "editorconfig": 1,
   "prettier": 1,
   "eslint": 1,
@@ -7,5 +7,6 @@
   "vscode": 1,
   "github": 1,
   "typescript": 1,
-  "programming": 1
+  "programming": 1,
+  "miscellaneous": 1
 }

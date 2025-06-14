@@ -346,7 +346,7 @@ Making some useful files in a `.vscode` directory enables us to apply IDE settin
 
 Here we can add a list of recommended extensions that any developer opening your project will be prompted to install with a dialog that looks like this:
 
-![VS Code Recommended Extension](/static/images/nitpicking/vscode_recommended_extension.webp)
+![VS Code Recommended Extension](/static/images/formatting/vscode-recommended-extension.webp)
 
 Essential extensions to recommend, if you've followed this article up until now, are:
 
@@ -462,13 +462,13 @@ jobs:
 Next we want to apply some settings to our repository that ensure that only code that passes our `Static Checks` build can find its way into `master`.
 
 1. Go to repository settings and create a new branch ruleset
-   ![Create a branch ruleset](/static/images/nitpicking/github_ruleset_step_1.webp)
+   ![Create a branch ruleset](/static/images/formatting/github-ruleset-step-1.webp)
 2. Name your ruleset (`main` or `master` should do the trick) and set the target branch to the default branch
-   ![Set the target branch](/static/images/nitpicking/github_ruleset_step_2.webp)
+   ![Set the target branch](/static/images/formatting/github-ruleset-step-2.webp)
 3. Under "Branch rules" check "Require a pull request before merging" and "Require status checks to pass" ("Restrict deletions" and "Block force pushes" are selected by default)
-   ![Configure branch rules](/static/images/nitpicking/github_ruleset_step_3.webp)
+   ![Configure branch rules](/static/images/formatting/github-ruleset-step-3.webp)
 4. Expand "Show additional settings" under "Require status checks to pass" and select the "Static Checks" GitHub Action.
-   ![Require static checks](/static/images/nitpicking/github_ruleset_step_4.webp)
+   ![Require static checks](/static/images/formatting/github-ruleset-step-4.webp)
 5. Hit "Save Changes"
 
 Now that we have made it so that:
@@ -478,7 +478,7 @@ Now that we have made it so that:
 
 The next time someone raises a pull request that doesn't pass our checks, they will see a UI that looks like this ([sample in demo repository](https://github.com/fnannestad/formatting-linting-demo/pull/4)):
 
-![Pull request with unsuccessful checks](/static/images/nitpicking/github_checks_not_successful_ui.webp)
+![Pull request with unsuccessful checks](/static/images/formatting/github-checks-not-successful-ui.webp)
 
 ---
 
